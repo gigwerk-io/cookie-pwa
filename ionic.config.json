@@ -1,0 +1,7 @@
+{
+  "name": "Gigwerk Freelancers",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

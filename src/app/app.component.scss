@@ -1,0 +1,28 @@
+::ng-deep gig-toolbar {
+  .active {
+    border-bottom: 0.2rem solid var(--ion-color-primary);
+    color: var(--ion-color-primary);
+  }
+  button {
+    border-bottom: 0.2rem solid white;
+  }
+}
+
+/* --- Extra custom tailwind utilities --- */
+::ng-deep .w-50 {
+  width: 50%;
+}
+
+::ng-deep .form-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border-color: #d2d6dc;
+  border-width: 1px;
+  border-radius: .375rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}

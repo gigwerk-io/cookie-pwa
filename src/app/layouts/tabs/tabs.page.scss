@@ -1,0 +1,26 @@
+@media (min-height: 569px) {
+  ion-tab-button {
+    ion-icon {
+      font-size: 38px;
+    }
+  }
+}
+
+@keyframes expand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 33%;
+  }
+}
+
+.indicator {
+  height: inherit;
+  width: 33.333%;
+}
+
+.active {
+  background-color: var(--ion-color-primary);
+}
+
