@@ -7,17 +7,13 @@ const routes: Routes = [
     loadChildren: () => import('./layouts/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: 'sign-in-with-gigwerk',
+    loadChildren: () => import('./pages/sign-in-with-gigwerk/sign-in-with-gigwerk.module').then( m => m.SignInWithGigwerkPageModule)
+  },
+  {
     path: '',
     redirectTo: '/app/home',
     pathMatch: 'full'
-  },
-  {
-    path: 'search',
-    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
-  },
-  {
-    path: 'notifications',
-    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
   },
 ];
 

@@ -1,0 +1,69 @@
+
+@keyframes top-chevron-reveal {
+  from {
+    width: 287%;
+    transform: rotate(0deg);
+    left: -50px;
+  }
+  to {
+    width: 287%;
+    transform: rotate(-37deg);
+    left: -50px;
+  }
+}
+
+@keyframes bottom-chevron-reveal {
+  from {
+    width: 275%;
+    transform: rotate(0deg);
+    left: -10px;
+  }
+  to {
+    width: 275%;
+    transform: rotate(-28deg);
+    left: -10px;
+  }
+}
+
+.top-chevron-animate {
+  animation-name: top-chevron-reveal;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+.bottom-chevron-animate {
+  animation-name: bottom-chevron-reveal;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+.top-chevron {
+  background: #3AC23E;
+  height: 32%;
+  width: 287%;
+  left: -50px;
+}
+
+.bottom-chevron {
+  background: #339C53;
+  height: 22%;
+  width: 275%;
+  left: -10px;
+}
+
+.logo {
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sign-in-form {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.sign-in-button {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

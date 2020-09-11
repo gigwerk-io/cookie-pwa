@@ -3,7 +3,7 @@
     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
       <!-- Marketplace filter button -->
       <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
-        <img class="block h-5 w-5" src="./assets/icon/interface/filter.svg" alt="filter button" />
+        <img class="block h-5 w-5" src="assets/icon/interface/filter.svg" alt="filter button" />
       </button>
     </div>
     <div class="flex-shrink-0 flex items-center">
@@ -14,18 +14,32 @@
     <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
       <!-- User account button -->
       <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
-        <img class="block h-5 w-5" src="./assets/icon/interface/user.svg" alt="user account button" />
+        <img class="block h-5 w-5" src="assets/icon/interface/user.svg" alt="user account button" />
       </button>
     </div>
   </div>
 </gig-header>
 <gig-toolbar>
-  <button class="w-50 h-full text-center active focus:outline-none">
+  <button (click)="feed = 'all'" [ngClass]="feed === 'all' ? 'active' : ''" class="w-50 h-full text-center focus:outline-none">
     All Jobs
   </button>
-  <button class="w-50 h-full text-center focus:outline-none">
+  <button (click)="feed = 'me'" [ngClass]="feed === 'me' ? 'active' : ''" class="w-50 h-full text-center focus:outline-none">
     My Jobs
   </button>
 </gig-toolbar>
 <ion-content>
+  <ng-container [ngSwitch]="feed">
+    <ng-container *ngSwitchCase="'all'">
+      <ng-container *ngIf="allFeed; else noJobsAvailable"></ng-container>
+      <ng-template #noJobsAvailable>
+        <img src="assets/undraw/undraw_empty_street_sfxm.svg" class="no-jobs-available" alt="No jobs available" />
+      </ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="'me'">
+      <ng-container *ngIf="myFeed; else noJobsAvailable"></ng-container>
+      <ng-template #noJobsAvailable>
+        <img src="assets/undraw/undraw_no_data_qbuo.svg" class="no-jobs-available" alt="No jobs available" />
+      </ng-template>
+    </ng-container>
+  </ng-container>
 </ion-content>

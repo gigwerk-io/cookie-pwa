@@ -26,3 +26,38 @@
   font-size: 1rem;
   line-height: 1.5;
 }
+
+
+@keyframes fadeout {
+  from {
+    opacity: 100%;
+    display: initial;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+
+::ng-deep .fade-out {
+  animation-name: fadeout;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 100%;
+    display: inherit;
+  }
+}
+
+::ng-deep .fade-in {
+  animation-name: fadein;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}

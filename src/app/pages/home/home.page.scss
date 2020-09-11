@@ -1,3 +1,11 @@
 ion-content {
   --background: #eee;
 }
+
+.no-jobs-available {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  height: 33%;
+  left: 50%;
+  top: 50%;
+}
