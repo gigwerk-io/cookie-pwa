@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'gig-notifications',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsPage implements OnInit {
   feed: 'all' | 'unread' = 'all';
-  notifications: any[];
+  allNotifications: any[];
+  unreadNotifications: any[];
 
-  constructor() { }
+  constructor(
+    public router: Router
+  ) { }
 
   ngOnInit() {
   }

@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://api.gigwerk.test/business/ea11187b-fba5-31c8-87b4-84928c0334d6'
 };
 
 /*

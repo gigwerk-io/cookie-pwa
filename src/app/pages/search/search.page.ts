@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'gig-search',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class SearchPage implements OnInit {
   results: any[];
 
-  constructor() { }
+  constructor(
+    public router: Router
+  ) { }
 
   ngOnInit() {
   }

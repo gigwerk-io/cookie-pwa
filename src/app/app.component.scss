@@ -8,11 +8,6 @@
   }
 }
 
-/* --- Extra custom tailwind utilities --- */
-::ng-deep .w-50 {
-  width: 50%;
-}
-
 ::ng-deep .form-input {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -61,3 +56,17 @@
   animation-duration: 3s;
   animation-fill-mode: forwards;
 }
+
+/* --- Extra custom tailwind utilities --- */
+::ng-deep .w-50 {
+  width: 50%;
+}
+
+::ng-deep .top-50 {
+  top: 50%;
+}
+
+::ng-deep .z-102 {
+  z-index: 102;
+}
+/* --- End extra custom tailwind utilities --- */

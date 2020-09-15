@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SearchPage
-  }
+  },
+  {
+    path: 'account',
+    loadChildren: () => import('../../pages/account/account.module').then( m => m.AccountPageModule)
+  },
 ];
 
 @NgModule({

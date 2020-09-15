@@ -2,8 +2,8 @@
   <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
       <!-- chat button -->
-      <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
-        <img class="block h-5 w-5" src="assets/icon/interface/chat.svg" alt="chat button" />
+      <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+        <img class="block h-6 w-6" src="assets/icon/interface/chat.svg" alt="chat button" />
       </button>
     </div>
     <div class="flex-shrink-0 flex items-center">
@@ -13,8 +13,8 @@
     </div>
     <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
       <!-- User account button -->
-      <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
-        <img class="block h-5 w-5" src="assets/icon/interface/user.svg" alt="user account button" />
+      <button (click)="router.navigateByUrl('/app/notifications/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+        <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button" />
       </button>
     </div>
   </div>
@@ -28,8 +28,18 @@
   </button>
 </gig-toolbar>
 <ion-content>
-  <ng-container *ngIf="notifications; else noNotifications"></ng-container>
+  <ng-container [ngSwitch]="feed">
+    <ng-container *ngSwitchCase="'all'">
+      <ng-container *ngIf="allNotifications; else noNotifications"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'unread'">
+      <ng-container *ngIf="unreadNotifications; else noNotifications"></ng-container>
+    </ng-container>
+  </ng-container>
   <ng-template #noNotifications>
     <img src="assets/undraw/undraw_inbox_cleanup_w2ur.svg" class="no-notifications" alt="No notifications" />
+    <div class="w-full absolute text-center top-50">
+      <label class="text-gray-800">No new notifications</label>
+    </div>
   </ng-template>
 </ion-content>
