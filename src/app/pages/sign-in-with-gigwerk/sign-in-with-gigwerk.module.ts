@@ -13,7 +13,7 @@ import { SignInWithGigwerkPage } from './sign-in-with-gigwerk.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SignInWithGigwerkPageRoutingModule
+    SignInWithGigwerkPageRoutingModule,
   ],
   declarations: [SignInWithGigwerkPage]
 })

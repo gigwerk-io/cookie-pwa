@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {NavController} from '@ionic/angular';
+import {remove} from '../../utils/services/internal/storage';
+import {StorageKeys} from '../../utils/interfaces/enum/Constants';
+import {AuthService} from '../../utils/services/http/Auth/auth.service';
 
 @Component({
   selector: 'gig-account',
@@ -11,12 +12,17 @@ import {NavController} from '@ionic/angular';
 export class AccountPage implements OnInit {
 
   constructor(
-    public router: Router,
-    public location: Location,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
   }
 
+  signOut() {
+    this.authService.logout()
+      .then(() => {
+        this.navCtrl.navigateRoot('sign-in-with-gigwerk');
+      });
+  }
 }

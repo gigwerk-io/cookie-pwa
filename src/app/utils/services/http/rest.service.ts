@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {get} from './storage';
-import {StorageKeys} from '../interfaces/enum/Constants';
+import {get} from '../internal/storage';
+import {StorageKeys} from '../../interfaces/enum/Constants';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,8 @@ export class RestService {
   public makeHttpRequest<T>(
     route: string,
     httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-    httpParams?: any
+    httpParams?: any,
+    isRoot: boolean = false
   ): Promise<Observable<T> | undefined> {
     return get(StorageKeys.ACCESS_TOKEN)
     .then(token => {
@@ -27,7 +28,7 @@ export class RestService {
         }
       };
 
-      route = `${environment.apiUrl}/${route}`;
+      route = `${isRoot ? environment.apiRootUrl : environment.apiUrl}/${route}`;
       switch (httpMethod) {
         case 'GET':
           if (httpParams) {

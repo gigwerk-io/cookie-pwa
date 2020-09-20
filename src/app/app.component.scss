@@ -57,6 +57,19 @@
   animation-fill-mode: forwards;
 }
 
+::ng-deep ion-item {
+  --inner-padding-end: 0;
+  height: 71px;
+  line-height: 2.8;
+  ion-label {
+    font-weight: 500;
+    font-size: 18px!important;
+  }
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
 /* --- Extra custom tailwind utilities --- */
 ::ng-deep .w-50 {
   width: 50%;
