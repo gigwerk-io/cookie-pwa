@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     console.log(state);
     switch (state.url) {
       default: // /sign-in-with-gigwerk route
-       return this.authService.isValidToken()
+       return this.authService.validateBusinessToken()
         .then((res: Response<ValidToken>) => {
           if (res.data.validToken) {
             return this.navCtrl.navigateRoot('app/home')
@@ -64,7 +64,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     switch (route) {
       default: // /app route
-        return this.authService.isValidToken()
+        return this.authService.validateBusinessToken()
           .then((res: Response<ValidToken>) => {
             if (res.data.validToken) {
               return true;

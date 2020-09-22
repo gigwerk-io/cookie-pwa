@@ -15,13 +15,12 @@ export class AuthService {
   constructor(
     public restService: RestService,
     public httpClient: HttpClient
-  ) {
-  }
+  ) {  }
 
-  public login(
+  public businessAppLogin(
     loginData: { username: string, password: string }
   ): Promise<Response<Login>> {
-    return this.httpClient.post<Response<Login>>(`${environment.apiRootUrl}/login`, loginData, {})
+    return this.httpClient.post<Response<Login>>(`${environment.apiUrl}/login`, loginData, {})
     .toPromise()
     .then(async res => {
       await set(StorageKeys.ACCESS_TOKEN, res.data.token);
@@ -30,8 +29,8 @@ export class AuthService {
     });
   }
 
-  public logout(): Promise<Response<void>> {
-    return this.restService.makeHttpRequest<Response<void>>(`logout`, 'POST', {}, true)
+  public endSession(): Promise<Response<string>> {
+    return this.restService.makeHttpRequest<Response<string>>(`logout`, 'POST', {}, true)
       .then(httpRes => httpRes.toPromise()
         .then(async res => {
           if (res.success) { // remove all storage constants
@@ -43,7 +42,7 @@ export class AuthService {
         }));
   }
 
-  public isValidToken(): Promise<Response<ValidToken>> {
+  public validateBusinessToken(): Promise<Response<ValidToken>> {
     return this.restService.makeHttpRequest<Response<ValidToken>>(`validate`, 'GET', {}, true)
     .then(httpRes => httpRes.toPromise()
       .then(res => {

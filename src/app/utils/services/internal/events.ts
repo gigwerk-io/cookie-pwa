@@ -39,7 +39,6 @@ export class Events {
       // Or you can create a new subject for future subscribers
       return;
     }
-
     subject.next(...data);
   }
 

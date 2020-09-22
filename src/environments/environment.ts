@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiRootUrl: 'http://api.gigwerk.test',
-  apiUrl: 'http://api.gigwerk.test/business/ea11187b-fba5-31c8-87b4-84928c0334d6'
+  apiRootUrl: 'http://local.gigwerk.io',
+  apiUrl: 'http://local.gigwerk.io/business/ea11187b-fba5-31c8-87b4-84928c0334d6'
 };
 
 /*
