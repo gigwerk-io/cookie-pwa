@@ -14,12 +14,12 @@
 - Install ionic globally `npm install -g @ionic/cli`
 - Install tailwindcss angular cli `npm i ng-tailwindcss -g`
 - Run `npm install`
-- Change the `apiRootUrl` in `./environments/environment.ts` variable with a valid Business Token acquired from the backend MySQL database.
+- Change the `apiUrl` in `./environments/environment.ts` by providing it with a valid Business Token acquired from the backend MySQL database. Should look something like this,
 
         export const environment = {
             production: false,
             apiRootUrl: 'http://local.gigwerk.io',
-            apiRootUrl: http://local.gigwerk.io/business/{business token here}
+            apiUrl: http://local.gigwerk.io/business/{business token here}
         };
         
 - Run `npm run start`
