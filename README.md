@@ -7,12 +7,22 @@
 ## Requirements
 - We recommend using WebStorm which you can find <a href="https://www.jetbrains.com/webstorm/download">here</a>. Otherwise <a href="https://code.visualstudio.com/download">Visual Studio Code</a> works fine. You'll need something that you can write TypeScript code comfortably in. 
 - You should have the API set up before you set up the frontend. Find that <a href="https://github.com/gigwerk-io/api">here</a>.
+- Get a business token from the backend MySQL database.
 ## Installation
 - Clone the dev branch by running, `git clone https://github.com/gigwerk-io/cookie-pwa.git`
 - Create a new branch for your ticket from develop with the ticket's name, `git branch GIGWERK-{your ticket number}`
 - Install ionic globally `npm install -g @ionic/cli`
 - Install tailwindcss angular cli `npm i ng-tailwindcss -g`
 - Run `npm install`
+- Change the `apiRootUrl` in `./environments/environment.ts` variable with a valid Business Token acquired from the backend MySQL database.
+
+        export const environment = {
+            production: false,
+            apiRootUrl: 'http://local.gigwerk.io',
+            apiRootUrl: http://local.gigwerk.io/business/{business token here}
+        };
+        
+- Run `npm run start`
 ## Resources
 - For UI Components we use <a href="https://tailwindui.com/">Tailwind UI</a>. Virtually all of our css needs are handled by this utility. You will likely never write css code on this project if you learn how to use it. Learn more <a href="https://tailwindcss.com/course">here</a>
 - For UI icons used in buttons and elsewhere this project uses a Flaticons UI interface pack. Most of them are already downloaded but if you find that one you need isn't in `./src/assets/icon/interface/*.svg` go <a href="https://www.flaticon.com/packs/ui-interface-25">here</a> to find them. **Make sure to download svg only**
