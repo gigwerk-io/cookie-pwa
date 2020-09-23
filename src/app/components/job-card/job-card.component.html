@@ -1,0 +1,36 @@
+<div class="pt-3 pl-3 pr-3 pb-3 mb-3 lg:w-50 md:w-50 sm:w-full lg:rounded md:rounded ml-auto mr-auto shadow-md bg-white" style="height: 175px;">
+  <div class="flex justify-between">
+    <p class="text-sm font-semibold">
+      1:00pm - 1:45pm, Tue, Oct. 8
+    </p>
+    <p class="text-sm font-bold text-green-600">
+      {{distance}} mi
+    </p>
+  </div>
+  <div class="mt-6 flex justify-between">
+    <div>
+      <h1 class="font-semibold text-xl">{{category}}</h1>
+      <p class="text-gray-500">{{subCategory}}</p>
+    </div>
+    <div class="inline-flex" style="line-height: 3rem">
+      <ion-icon class="mr--1 mt-4 text-xl font-medium" src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
+      <div class="font-semibold text-4xl">{{price}}</div>
+    </div>
+  </div>
+  <div class="mt-10 flex justify-between">
+    <div class="inline-flex">
+      <div class="h-5 w-5 bg-{{statusColor}}-500 rounded-full"></div>
+      <p class="text-sm pl-1 font-semibold">
+        {{status}}
+      </p>
+    </div>
+    <div class="inline-flex">
+      <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
+      <p class="text-sm font-semibold">{{views}} views</p>
+    </div>
+    <div class="inline-flex">
+      <ion-icon src="assets/icon/interface/wall-clock.svg" class="text-xl pr-2" color="primary"></ion-icon>
+      <p class="text-sm font-semibold">{{time}} min</p>
+    </div>
+  </div>
+</div>
