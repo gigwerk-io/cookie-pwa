@@ -21,7 +21,7 @@
     </div>
     <div class="mt-12 flex justify-between">
       <div class="inline-flex">
-        <div *ngIf="jobStatus.name != 'Complete'; else completeIndicator" class="h-5 w-5 bg-{{jobStatus.color}}-500 rounded-full"></div>
+        <div *ngIf="jobStatus.name !== 'Complete'; else completeIndicator" class="h-5 w-5 bg-{{jobStatus.color}}-500 rounded-full"></div>
         <ng-template #completeIndicator>
           <ion-icon class="text-green-700 text-xl" src="assets/icon/interface/motivation.svg"></ion-icon>
         </ng-template>
@@ -33,7 +33,7 @@
         <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
         <p class="text-sm font-semibold">{{views}} views</p>
       </div>
-      <div class="inline-flex">
+      <div class="inline-flex" *ngIf="jobStatus.name !== 'Complete'">
         <ion-icon src="assets/icon/interface/wall-clock.svg" class="text-xl pr-2" color="primary"></ion-icon>
         <p class="text-sm font-semibold">{{time}} min</p>
       </div>

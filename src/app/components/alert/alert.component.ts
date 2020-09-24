@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Events} from '../../utils/services/internal/events';
-import {Alert} from '../../utils/interfaces/enum/Alert';
+import {AlertOptions} from '../../utils/interfaces/enum/AlertOptions';
 
 @Component({
   selector: 'gig-alert',
@@ -26,17 +26,17 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.events.subscribe('global-alert',
-      (alert: Alert) => {
+      (alertOptions: AlertOptions) => {
         this.show = true;
-        this.pos = alert.position;
-        this.animation = alert.enterAnimation;
-        this.actionButton = alert.actionButton;
-        this.color = alert.color;
-        this.alertMessage = alert.alertMessage;
+        this.pos = alertOptions.position;
+        this.animation = alertOptions.enterAnimation;
+        this.actionButton = alertOptions.actionButton;
+        this.color = alertOptions.color;
+        this.alertMessage = alertOptions.alertMessage;
       });
-    this.events.subscribe('global-alert-dismiss', (alert: {animation: 'top-slideup' | 'top-slidedown' | 'bottom-slideup' | 'bottom-slidedown'}) => {
-      if (alert) {
-        this.animation = alert.animation;
+    this.events.subscribe('global-alert-dismiss', (alertOptions: {animation: 'top-slideup' | 'top-slidedown' | 'bottom-slideup' | 'bottom-slidedown'}) => {
+      if (alertOptions) {
+        this.animation = alertOptions.animation;
         setTimeout(() => this.show = false, 4000);
       } else {
         this.show = false;

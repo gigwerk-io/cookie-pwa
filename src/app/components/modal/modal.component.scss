@@ -1,0 +1,55 @@
+@keyframes fadein {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+@keyframes fadeout {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(.95, .95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes animate-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(1rem) scale(.95, .95);
+  }
+}
+
+.backdrop-fade-in {
+  animation-name: fadein;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+.backdrop-fade-out {
+  animation-name: fadeout;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
+}
+
+.animate-in {
+  animation-name: animate-in;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
+
+.animate-out {
+  animation-name: animate-out;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards;
+}
