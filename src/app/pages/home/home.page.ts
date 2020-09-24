@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {FeedService} from '../../utils/services/http/Marketplace/feed.service';
+import {Job} from '../../utils/interfaces/responses/Marketplace';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'gig-home',
@@ -8,14 +10,18 @@ import {Router} from '@angular/router';
 })
 export class HomePage implements OnInit {
   feed: 'me' | 'all' = 'all';
-  allJobs: any[] = [1];
-  myJobs: any[];
+  allJobs: Job[];
+  myJobs: Job[];
 
   constructor(
-    public router: Router
-  ) {
-  }
+    public navCtrl: NavController,
+    public feedService: FeedService
+  ) {  }
 
   ngOnInit() {
+    this.feedService.jobFeed()
+      .then((feed: Job[]) => this.allJobs = feed);
+    this.feedService.myProposals()
+      .then((feed: Job[]) => this.myJobs = feed);
   }
 }

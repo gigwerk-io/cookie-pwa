@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {remove} from '../../utils/services/internal/storage';
-import {StorageKeys} from '../../utils/interfaces/enum/Constants';
 import {AuthService} from '../../utils/services/http/Auth/auth.service';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 

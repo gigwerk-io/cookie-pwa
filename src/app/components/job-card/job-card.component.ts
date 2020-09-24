@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Status} from '../../utils/interfaces/enum/Status';
+import {Status, StatusConst} from '../../utils/interfaces/enum/Status';
 
 @Component({
   selector: 'gig-job-card',
@@ -12,14 +12,18 @@ export class JobCardComponent implements OnInit {
   @Input() subCategory: string;
   @Input() price: number;
   @Input() completeByDate: any;
-  @Input() views: any;
-  @Input() distance: any;
+  @Input() views: number;
+  @Input() distance: number;
   @Input() status: Status;
   time: number = 45;
-  statusColor: string;
+  jobStatus: Status;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.status) {
+      this.jobStatus = StatusConst[this.status.name.split(' ').join('')];
+    }
+  }
 
 }

@@ -1,4 +1,4 @@
-export const Status = {
+export const StatusConst = {
   Requested: {
     id: 1,
     name: 'Available',

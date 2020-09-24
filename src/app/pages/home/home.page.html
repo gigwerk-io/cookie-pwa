@@ -13,7 +13,7 @@
     </div>
     <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
       <!-- User account button -->
-      <button (click)="router.navigateByUrl('/app/home/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+      <button (click)="navCtrl.navigateForward('/app/home/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
         <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button" />
       </button>
     </div>
@@ -30,13 +30,38 @@
 <ion-content>
   <ng-container [ngSwitch]="feed">
     <ng-container *ngSwitchCase="'all'">
-      <ng-container *ngIf="allJobs; else noJobsAvailable">
-        <gig-job-card></gig-job-card>
+      <ng-container *ngIf="allJobs; else skeletonJobs">
+        <ng-container *ngIf="allJobs.length > 0; else noJobsAvailable">
+          <gig-job-card
+                  *ngFor="let job of allJobs"
+                  [category]="job.category.name"
+                  [completeByDate]="job.complete_before"
+                  [price]="job.price"
+                  [views]="job.views"
+                  [distance]="job.distance_away"
+                  [status]="job.job_status"
+          ></gig-job-card>
+        </ng-container>
       </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'me'">
-      <ng-container *ngIf="myJobs; else noJobsAvailable"></ng-container>
+      <ng-container *ngIf="myJobs; else skeletonJobs">
+        <ng-container *ngIf="myJobs.length > 0; else noJobsAvailable">
+          <gig-job-card
+                  *ngFor="let job of myJobs"
+                  [category]="job.category.name"
+                  [completeByDate]="job.complete_before"
+                  [price]="job.price"
+                  [views]="job.views"
+                  [distance]="job.distance_away"
+                  [status]="job.job_status"
+          ></gig-job-card>
+        </ng-container>
+      </ng-container>
     </ng-container>
+    <ng-template #skeletonJobs>
+      <gig-job-card *ngFor="let job of [1, 2, 3]"></gig-job-card>
+    </ng-template>
     <ng-template #noJobsAvailable>
       <img src="assets/undraw/undraw_no_data_qbuo.svg" class="no-jobs-available" alt="No jobs available" />
       <div class="w-full absolute text-center top-50">
