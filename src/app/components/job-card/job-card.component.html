@@ -5,11 +5,12 @@
     <div class="flex justify-between">
       <p class="text-sm font-semibold">
         <!--        1:00pm - 1:45pm, Tue, Oct. 8-->
-        {{completeByDate | date: 'hh:mm aa, EE, LLL. d'}}
+        {{completeByDate | date: 'h:mm aa, EE, LLL. d'}}
       </p>
-      <p *ngIf="distance" class="text-sm font-bold text-green-600">
-        {{distance}} mi
-      </p>
+      <div *ngIf="distance" class="inline-flex">
+        <ion-icon class="text-green-600 text-xl pr-1" src="assets/icon/interface/pin.svg"></ion-icon>
+        <p class="text-sm font-bold text-green-600">{{distance}} mi</p>
+      </div>
     </div>
     <div class="mt-8 flex justify-between">
       <div>
@@ -30,13 +31,13 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </ng-template>
-        <p class="text-sm pl-1 font-semibold">
+        <p class="text-sm pl-2 font-semibold">
           {{jobStatus.name}}
         </p>
       </div>
       <div class="inline-flex" *ngIf="jobStatus.name === 'Available'">
         <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
-        <p class="text-sm font-semibold">{{views}} views</p>
+        <p class="text-sm font-semibold">{{views}} Views</p>
       </div>
       <div class="inline-flex" *ngIf="jobStatus.name !== 'Complete'">
         <ion-icon src="assets/icon/interface/gauge.svg" class="text-xl pr-2 text-{{displayIntensity(intensity.id).color}}-600"></ion-icon>

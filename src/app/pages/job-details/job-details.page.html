@@ -24,19 +24,50 @@
         </div>
       </div>
     </gig-header>
-<!--    <gig-toolbar>-->
-<!--      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"-->
-<!--              class="w-50 h-full text-center focus:outline-none">-->
-<!--        Details-->
-<!--      </button>-->
-<!--      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"-->
-<!--              class="w-50 h-full text-center focus:outline-none">-->
-<!--        Checklist-->
-<!--      </button>-->
-<!--    </gig-toolbar>-->
+    <!--    <gig-toolbar>-->
+    <!--      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"-->
+    <!--              class="w-50 h-full text-center focus:outline-none">-->
+    <!--        Details-->
+    <!--      </button>-->
+    <!--      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"-->
+    <!--              class="w-50 h-full text-center focus:outline-none">-->
+    <!--        Checklist-->
+    <!--      </button>-->
+    <!--    </gig-toolbar>-->
   </div>
   <!--  main content-->
-  <div class="mt-16 h-full w-full" style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
-    <p>Some text</p>
+  <div class="mt-16 h-full w-full"
+       style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+    <ng-container *ngIf="jobDetail; else skeletonJob">
+      <!-- job details here-->
+    </ng-container>
+
+    <ng-template #skeletonJob>
+      <ion-skeleton-text animated class="w-full h-32"></ion-skeleton-text>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+      </ion-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+      </ion-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+      </ion-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+      </ion-item>
+    </ng-template>
   </div>
 </ion-content>
