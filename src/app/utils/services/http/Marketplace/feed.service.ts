@@ -38,4 +38,12 @@ export class FeedService extends RestService {
       return res.data;
     }));
   }
+
+  public showJob(id: number): Promise<Job> {
+    return this.makeHttpRequest<Response<Job>>(`marketplace/job/${id}`, 'GET')
+    .then(httpRes => httpRes.toPromise()
+    .then((res: Response<Job>) => {
+      return res.data;
+    }));
+  }
 }
