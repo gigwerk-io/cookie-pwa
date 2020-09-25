@@ -1,5 +1,8 @@
+import { BusinessUser } from './BusinessUser';
+
 export interface User {
   id: number;
+  business_id: BusinessUser;
   first_name: string;
   last_name: string;
   username: string;
