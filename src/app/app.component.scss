@@ -1,3 +1,5 @@
+@import "../theme/tailwind-extra";
+
 ::ng-deep gig-toolbar {
   .active {
     border-bottom: 0.2rem solid var(--ion-color-primary);
@@ -69,17 +71,3 @@
     font-size: 24px;
   }
 }
-
-/* --- Extra custom tailwind utilities --- */
-::ng-deep .w-50 {
-  width: 50%;
-}
-
-::ng-deep .top-50 {
-  top: 50%;
-}
-
-::ng-deep .z-102 {
-  z-index: 102;
-}
-/* --- End extra custom tailwind utilities --- */
