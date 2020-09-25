@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Status, StatusConst} from '../../utils/interfaces/enum/Status';
 import {Intensity, IntensityConst} from '../../utils/interfaces/enum/Intensity';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'gig-job-card',
@@ -21,7 +22,9 @@ export class JobCardComponent implements OnInit {
   time: number = 45;
   jobStatus: Status;
 
-  constructor() { }
+  constructor(
+    public navCtrl: NavController
+  ) { }
 
   ngOnInit() {
     if (this.status) {
@@ -44,5 +47,6 @@ export class JobCardComponent implements OnInit {
 
   openJobDetails() {
     console.log('open job details');
+    this.navCtrl.navigateForward('app/home/job-details')
   }
 }
