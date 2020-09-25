@@ -1,36 +1,55 @@
-<div class="pt-3 pl-3 pr-3 pb-3 mb-3 lg:w-50 md:w-50 sm:w-full lg:rounded md:rounded ml-auto mr-auto shadow-md bg-white" style="height: 175px;">
-  <div class="flex justify-between">
-    <p class="text-sm font-semibold">
-      1:00pm - 1:45pm, Tue, Oct. 8
-    </p>
-    <p class="text-sm font-bold text-green-600">
-      {{distance}} mi
-    </p>
-  </div>
-  <div class="mt-6 flex justify-between">
-    <div>
-      <h1 class="font-semibold text-xl">{{category}}</h1>
-      <p class="text-gray-500">{{subCategory}}</p>
-    </div>
-    <div class="inline-flex" style="line-height: 3rem">
-      <ion-icon class="mr--1 mt-4 text-xl font-medium" src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
-      <div class="font-semibold text-4xl">{{price}}</div>
-    </div>
-  </div>
-  <div class="mt-10 flex justify-between">
-    <div class="inline-flex">
-      <div class="h-5 w-5 bg-{{statusColor}}-500 rounded-full"></div>
-      <p class="text-sm pl-1 font-semibold">
-        {{status}}
+<ng-container
+        *ngIf="category && price && completeByDate && status; else skeletonCard">
+  <div (click)="openJobDetails()" class="pt-3 pl-3 pr-3 pb-3 mb-3 lg:w-50 md:w-50 sm:w-full lg:rounded md:rounded ml-auto mr-auto shadow-md bg-white"
+       style="height: 175px;">
+    <div class="flex justify-between">
+      <p class="text-sm font-semibold">
+        <!--        1:00pm - 1:45pm, Tue, Oct. 8-->
+        {{completeByDate | date: 'hh:mm aa, EE, LLL. d'}}
+      </p>
+      <p *ngIf="distance" class="text-sm font-bold text-green-600">
+        {{distance}} mi
       </p>
     </div>
-    <div class="inline-flex">
-      <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
-      <p class="text-sm font-semibold">{{views}} views</p>
+    <div class="mt-8 flex justify-between">
+      <div>
+        <h1 class="font-semibold text-2xl">{{category}}</h1>
+      </div>
+      <div class="inline-flex" style="line-height: 1.87rem">
+        <ion-icon class="mr--1 mt-2 text-xl font-medium" src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
+        <div class="font-semibold text-4xl">{{displayPrice(price | currency: '':'':'1.2-2')}}</div>
+      </div>
     </div>
-    <div class="inline-flex">
-      <ion-icon src="assets/icon/interface/wall-clock.svg" class="text-xl pr-2" color="primary"></ion-icon>
-      <p class="text-sm font-semibold">{{time}} min</p>
+    <div class="mt-12 flex justify-between">
+      <div class="inline-flex">
+        <div *ngIf="jobStatus.name !== 'Complete'; else completeIndicator"
+             class="h-5 w-5 bg-{{jobStatus.color}}-500 rounded-full"></div>
+        <ng-template #completeIndicator>
+          <svg class="w-5 h-5 text-white bg-green-400 rounded-full" fill="none" stroke="currentColor"
+               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </ng-template>
+        <p class="text-sm pl-1 font-semibold">
+          {{jobStatus.name}}
+        </p>
+      </div>
+      <div class="inline-flex" *ngIf="jobStatus.name === 'Available'">
+        <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
+        <p class="text-sm font-semibold">{{views}} views</p>
+      </div>
+      <div class="inline-flex" *ngIf="jobStatus.name !== 'Complete'">
+        <ion-icon src="assets/icon/interface/gauge.svg" class="text-xl pr-2 text-{{displayIntensity(intensity.id).color}}-600"></ion-icon>
+        <p class="text-sm font-semibold">
+          {{displayIntensity(intensity.id).name}}
+        </p>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #skeletonCard>
+  <div class="ml-auto mr-auto pb-3 mb-3 w-full lg:w-50 md:w-50 lg:rounded md:rounded" style="height: 175px">
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </div>
+</ng-template>

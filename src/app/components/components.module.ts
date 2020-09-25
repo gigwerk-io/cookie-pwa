@@ -5,12 +5,16 @@ import {AlertComponent} from './alert/alert.component';
 import {CommonModule} from '@angular/common';
 import {JobCardComponent} from './job-card/job-card.component';
 import {IonicModule} from '@ionic/angular';
+import {ModalComponent} from './modal/modal.component';
+import {ModalHostDirective} from '../utils/directives/components/modal/modal-host.directive';
 
 const COMPONENTS = [
   AlertComponent,
   HeaderComponent,
   JobCardComponent,
-  ToolbarComponent
+  ToolbarComponent,
+  ModalComponent,
+  ModalHostDirective
 ];
 const MODULES = [];
 

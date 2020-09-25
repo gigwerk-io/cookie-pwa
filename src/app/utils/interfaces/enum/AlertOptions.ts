@@ -1,4 +1,4 @@
-export interface Alert {
+export interface AlertOptions {
   alertMessage: string,
   color: string,
   position: 'top-0' | 'middle' | 'bottom-0',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'gig-search',
@@ -10,7 +10,7 @@ export class SearchPage implements OnInit {
   results: any[];
 
   constructor(
-    public router: Router
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {

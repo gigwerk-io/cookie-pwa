@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Events} from '../../events';
-import {Alert} from '../../../../interfaces/enum/Alert';
+import {AlertOptions} from '../../../../interfaces/enum/AlertOptions';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AlertService {
     private events: Events
   ) { }
 
-  public show(options: Alert) {
+  public show(options: AlertOptions) {
     this.events.publish('global-alert', options);
 
     if (options.duration) {
