@@ -42,6 +42,7 @@
         <ng-container *ngIf="allJobs.length > 0; else noJobsAvailable">
           <gig-job-card
                   *ngFor="let job of allJobs"
+                  [id]="job.id"
                   [category]="job.category.name"
                   [completeByDate]="job.complete_before"
                   [price]="job.price"
@@ -58,6 +59,7 @@
         <ng-container *ngIf="myJobs.length > 0; else noJobsAvailable">
           <gig-job-card
                   *ngFor="let job of myJobs"
+                  [id]="job.id"
                   [category]="job.category.name"
                   [completeByDate]="job.complete_before"
                   [price]="job.price"
