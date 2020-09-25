@@ -30,9 +30,7 @@
 <ion-content>
   <ng-container [ngSwitch]="feed">
     <ng-container *ngSwitchCase="'all'">
-      <ng-container *ngIf="allJobs; else noJobsAvailable">
-        <gig-job-card></gig-job-card>
-      </ng-container>
+      <ng-container *ngIf="allJobs; else noJobsAvailable"></ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'me'">
       <ng-container *ngIf="myJobs; else noJobsAvailable"></ng-container>

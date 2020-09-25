@@ -1,4 +1,4 @@
 export const StorageKeys = {
-  AccessToken: 'AccessToken',
-  User: 'User'
+  ACCESS_TOKEN: 'ACCESS_TOKEN',
+  USER: 'USER'
 };

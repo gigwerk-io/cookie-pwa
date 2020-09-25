@@ -3,20 +3,17 @@ import {HeaderComponent} from './header/header.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 import {AlertComponent} from './alert/alert.component';
 import {CommonModule} from '@angular/common';
-import {JobCardComponent} from './job-card/job-card.component';
-import {IonicModule} from '@ionic/angular';
 
 const COMPONENTS = [
   AlertComponent,
   HeaderComponent,
-  JobCardComponent,
   ToolbarComponent
 ];
 const MODULES = [];
 
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [...MODULES, CommonModule, IonicModule],
+  imports: [...MODULES, CommonModule],
   exports: [...COMPONENTS, ...MODULES]
 })
 export class ComponentsModule {

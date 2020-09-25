@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 })
 export class HomePage implements OnInit {
   feed: 'me' | 'all' = 'all';
-  allJobs: any[] = [1];
+  allJobs: any[];
   myJobs: any[];
 
   constructor(

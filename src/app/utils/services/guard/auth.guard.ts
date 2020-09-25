@@ -41,13 +41,13 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
               .then(() => false);
           } else {
             // clear storage
-            remove(StorageKeys.AccessToken);
+            remove(StorageKeys.ACCESS_TOKEN);
             return true;
           }
         })
         .catch(err => {
           // clear storage
-          remove(StorageKeys.AccessToken);
+          remove(StorageKeys.ACCESS_TOKEN);
           return true;
         });
     }
@@ -70,14 +70,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
               return true;
             } else {
               // clear storage
-              remove(StorageKeys.AccessToken);
+              remove(StorageKeys.ACCESS_TOKEN);
               return this.navCtrl.navigateRoot('sign-in-with-gigwerk')
               .then(() => false);
             }
           })
           .catch(err => {
             // clear storage
-            remove(StorageKeys.AccessToken);
+            remove(StorageKeys.ACCESS_TOKEN);
             return this.navCtrl.navigateRoot('sign-in-with-gigwerk')
               .then(() => false);
           });

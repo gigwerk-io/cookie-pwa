@@ -10,7 +10,7 @@
 - Get a business token from the backend MySQL database.
 ## Installation
 - Clone the dev branch by running, `git clone https://github.com/gigwerk-io/cookie-pwa.git`
-- Create a new branch for your ticket from develop with the ticket's name, `git checkout -b GIGWERK-{your ticket number}`
+- Create a new branch for your ticket from develop with the ticket's name, `git branch GIGWERK-{your ticket number}`
 - Install ionic globally `npm install -g @ionic/cli`
 - Install tailwindcss angular cli `npm i ng-tailwindcss -g`
 - Run `npm install`

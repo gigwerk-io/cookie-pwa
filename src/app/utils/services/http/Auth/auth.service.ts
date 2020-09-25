@@ -10,13 +10,12 @@ import {StorageKeys} from '../../../interfaces/enum/Constants';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends RestService{
+export class AuthService {
 
   constructor(
+    public restService: RestService,
     public httpClient: HttpClient
-  ) {
-    super(httpClient);
-  }
+  ) {  }
 
   public businessAppLogin(
     loginData: { username: string, password: string }
@@ -24,18 +23,14 @@ export class AuthService extends RestService{
     return this.httpClient.post<Response<Login>>(`${environment.apiUrl}/login`, loginData, {})
     .toPromise()
     .then(async res => {
-      // get current business create a pivot model relating users to a business
-      // const businesses = res.data.user.business.filter((business) => {
-      //   return business.owner_id === res.data.user.id;
-      // });
-      await set(StorageKeys.AccessToken, res.data.token);
-      await set(StorageKeys.User, res.data.user);
+      await set(StorageKeys.ACCESS_TOKEN, res.data.token);
+      await set(StorageKeys.USER, res.data.user);
       return res;
     });
   }
 
   public endSession(): Promise<Response<string>> {
-    return this.makeHttpRequest<Response<string>>(`logout`, 'POST', {}, true)
+    return this.restService.makeHttpRequest<Response<string>>(`logout`, 'POST', {}, true)
       .then(httpRes => httpRes.toPromise()
         .then(async res => {
           if (res.success) { // remove all storage constants
@@ -48,7 +43,7 @@ export class AuthService extends RestService{
   }
 
   public validateBusinessToken(): Promise<Response<ValidToken>> {
-    return this.makeHttpRequest<Response<ValidToken>>(`validate`, 'GET', {}, true)
+    return this.restService.makeHttpRequest<Response<ValidToken>>(`validate`, 'GET', {}, true)
     .then(httpRes => httpRes.toPromise()
       .then(res => {
         if (!res.data.validToken) {

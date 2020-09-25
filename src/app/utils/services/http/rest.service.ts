@@ -20,7 +20,7 @@ export class RestService {
     httpParams?: any,
     isRoot: boolean = false
   ): Promise<Observable<T> | undefined> {
-    return get(StorageKeys.AccessToken)
+    return get(StorageKeys.ACCESS_TOKEN)
     .then(token => {
       const header = {
         headers: {
