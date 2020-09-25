@@ -1,5 +1,6 @@
 import {User} from '../models/User';
 import {Status} from '../enum/Status';
+import {Intensity} from '../enum/Intensity';
 
 export interface Job {
   id: number,
@@ -26,10 +27,7 @@ export interface Job {
   customer: User,
   category: Category,
   job_status: Status,
-  job_intensity: {
-    id: number,
-    name: string
-  }
+  job_intensity: Intensity
 }
 
 export interface Category {

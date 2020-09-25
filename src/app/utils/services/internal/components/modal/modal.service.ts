@@ -16,7 +16,7 @@ export class ModalService {
     this.events.publish('global-modal', new ModalItem(options.component, options));
   }
 
-  public dismiss(options?: ModalOptions) {
-    this.events.publish('global-modal-dismiss', new ModalItem(options.component, options));
+  public dismiss() {
+    this.events.publish('global-modal-dismiss');
   }
 }

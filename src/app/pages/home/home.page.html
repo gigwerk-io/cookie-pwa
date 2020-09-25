@@ -28,7 +28,7 @@
   </button>
 </gig-toolbar>
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher [disabled]="!myJobs && !allJobs" slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
             pullingIcon="assets/icon/interface/loading.svg"
             pullingText=""
@@ -48,6 +48,7 @@
                   [views]="job.views"
                   [distance]="job.distance_away"
                   [status]="job.job_status"
+                  [intensity]="job.job_intensity"
           ></gig-job-card>
         </ng-container>
       </ng-container>
@@ -63,6 +64,7 @@
                   [views]="job.views"
                   [distance]="job.distance_away"
                   [status]="job.job_status"
+                  [intensity]="job.job_intensity"
           ></gig-job-card>
         </ng-container>
       </ng-container>

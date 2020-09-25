@@ -30,4 +30,8 @@
 ::ng-deep .mr--1 {
   margin-right: -0.25rem;
 }
+
+::ng-deep .bg-primary {
+  background: var(--ion-color-primary);
+}
 /* --- End extra custom tailwind utilities --- */

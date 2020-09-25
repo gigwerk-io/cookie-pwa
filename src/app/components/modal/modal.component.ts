@@ -42,9 +42,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
       this.modalComponent = modalOptions.component;
       this.loadComponent(modalItem);
     });
-    this.events.subscribe('global-modal-dismiss', (modalOptions: ModalOptions) => {
-      this.show = false;
-    })
+    this.events.subscribe('global-modal-dismiss', () => this.dismiss());
   }
 
   ngOnDestroy() {
