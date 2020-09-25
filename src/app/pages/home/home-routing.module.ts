@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('../../pages/account/account.module').then( m => m.AccountPageModule)
   },
   {
-    path: 'job-details',
+    path: 'job-details/:id',
     loadChildren: () => import('../../pages/job-details/job-details.module').then( m => m.JobDetailsPageModule)
   }
 ];

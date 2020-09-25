@@ -9,7 +9,7 @@ import {NavController} from '@ionic/angular';
   styleUrls: ['./job-card.component.scss'],
 })
 export class JobCardComponent implements OnInit {
-
+  @Input() id: number;
   @Input() category: string;
   @Input() subCategory: string;
   @Input() price: number;
@@ -47,6 +47,6 @@ export class JobCardComponent implements OnInit {
 
   openJobDetails() {
     console.log('open job details');
-    this.navCtrl.navigateForward('app/home/job-details')
+    this.navCtrl.navigateForward(`app/home/job-details/${this.id}`)
   }
 }

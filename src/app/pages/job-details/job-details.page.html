@@ -1,24 +1,42 @@
-<ion-content>
-  <gig-header class="fixed z-102 w-full">
-    <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Back button -->
-        <button (click)="navCtrl.back()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out" aria-label="Main menu" aria-expanded="false">
-          <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button" />
-        </button>
+<ion-content scrollY="false">
+  <!--  header/toolbar -->
+  <div class="z-102 fixed w-full">
+    <gig-header>
+      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Back button -->
+          <button (click)="navCtrl.back()"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                  aria-label="Main menu" aria-expanded="false">
+            <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button"/>
+          </button>
+        </div>
+        <div class="flex-shrink-0 flex items-center">
+          <h5 class="block font-medium text-black">
+            Job Details
+          </h5>
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+          <!-- More button -->
+          <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+            <img class="block w-10" src="assets/icon/interface/more.svg" alt="more button"/>
+          </button>
+        </div>
       </div>
-      <div class="flex-shrink-0 flex items-center">
-        <h5 class="block font-medium text-black">
-          Job Details
-        </h5>
-      </div>
-      <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
-        <!-- More button -->
-        <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-          <img class="block w-10" src="assets/icon/interface/more.svg" alt="more button" />
-        </button>
-      </div>
-    </div>
-  </gig-header>
-
+    </gig-header>
+    <gig-toolbar>
+      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"
+              class="w-50 h-full text-center focus:outline-none">
+        Details
+      </button>
+      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"
+              class="w-50 h-full text-center focus:outline-none">
+        Checklist
+      </button>
+    </gig-toolbar>
+  </div>
+  <!--  main content-->
+  <div class="mt-32 h-full w-full" style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+    <p>Some text</p>
+  </div>
 </ion-content>

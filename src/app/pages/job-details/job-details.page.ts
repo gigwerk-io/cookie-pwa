@@ -7,6 +7,7 @@ import {NavController} from '@ionic/angular';
   styleUrls: ['./job-details.page.scss'],
 })
 export class JobDetailsPage implements OnInit {
+  feed: 'details' | 'checklist' = 'details';
 
   constructor(
     public navCtrl: NavController
