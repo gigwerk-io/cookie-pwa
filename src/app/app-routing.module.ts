@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'sign-in-with-gigwerk',
     loadChildren: () => import('./pages/sign-in-with-gigwerk/sign-in-with-gigwerk.module').then( m => m.SignInWithGigwerkPageModule),
     canActivate: [AuthGuard]
-  },
+  }
 ];
 
 @NgModule({

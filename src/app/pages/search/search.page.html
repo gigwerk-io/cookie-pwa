@@ -2,12 +2,12 @@
   <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
       <!-- Search filter button -->
-<!--      <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">-->
-<!--        <img class="block h-6 w-6" src="assets/icon/interface/filter.svg" alt="filter button" />-->
-<!--      </button>-->
-<!--      Help button-->
+      <!--      <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">-->
+      <!--        <img class="block h-6 w-6" src="assets/icon/interface/filter.svg" alt="filter button" />-->
+      <!--      </button>-->
+      <!--      Help button-->
       <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-        <img class="block h-6 w-6" src="assets/icon/interface/question.svg" alt="help button" />
+        <img class="block h-6 w-6" src="assets/icon/interface/question.svg" alt="help button"/>
       </button>
     </div>
     <div class="flex-shrink-0 flex items-center">
@@ -17,39 +17,101 @@
     </div>
     <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
       <!-- User account button -->
-      <button (click)="navCtrl.navigateForward('/app/search/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-        <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button" />
+      <button (click)="navCtrl.navigateForward('/app/search/account')"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+        <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button"/>
       </button>
     </div>
   </div>
 </gig-header>
 <gig-toolbar>
   <div class="w-full text-center">
-    <div class="m-3 relative rounded-md ">
-      <form class="flex items-center" [formGroup]="form" (ngSubmit)="searchUsers(form.value)">
-        <button type="submit" class="ml-2 mr-4 h-10 w-10 p-2 text-gray-200 rounded-md">
-          <img src="assets/icon/interface/search.svg" alt="search icon">
-        </button>
-        <input formControlName="searchInput" id="search" type="search" class="form-input block w-full pl-4 sm:text-sm sm:leading-5 outline-none focus:shadow-outline" placeholder="Search anything...">
+    <div class="m-3 relative rounded-md shadow-sm">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <img class="h-5 w-5 text-gray-200" src="assets/icon/interface/search.svg" alt="search icon"/>
+      </div>
+      <form action=".">
+        <input [(ngModel)]="query"
+               (ngModelChange)="onInputChange($event)"
+               (focus)="isFocused = true"
+               (blur)="isFocused = false"
+               id="search"
+               name="search"
+               type="search"
+               class="form-input block w-full pl-10 sm:text-sm sm:leading-5 outline-none focus:shadow-outline"
+               placeholder="Search anything..."
+               autocomplete>
       </form>
     </div>
   </div>
-
+  <button *ngIf="isFocused" class="outline-none focus:outline-none mr-3 my-auto text-lg inline-flex bg-transparent">
+    Cancel
+  </button>
 </gig-toolbar>
 <ion-content>
-  <ng-container *ngIf="results; else noResults">
-    <div [routerLink]="['/app/search/profile/', user.id]" *ngFor="let user of results" class="border-b flex hover:bg-gray-200 cursor-pointer">
-      <span class="inline-block relative mt-3 mb-3 ml-4">
-        <img class="h-12 w-12 rounded-full" src="{{ user.profile.image }}" alt="">
-        <span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full text-white shadow-solid bg-green-400"></span>
-      </span>
-      <div class="flex-col justify-between ml-3">
-        <div class="mt-3">{{ user.first_name }} {{ user.last_name }}</div>
-        <div class="text-gray-500 text-sm">{{ user.email }}</div>
+  <ng-container *ngIf="results; else searchAnything">
+    <ng-container *ngIf="results.length > 0; else noResults">
+      <div class="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul>
+          <li *ngFor="let res of results">
+            <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+              <div class="flex items-center px-4 py-4 sm:px-6">
+                <div class="min-w-0 flex-1 flex items-center">
+                  <div class="flex-shrink-0">
+                    <img class="h-12 w-12 rounded-full" src="{{res.profile.image}}" alt="Profile image">
+                  </div>
+                  <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                    <div>
+                      <div class="text-sm leading-5 font-medium text-gray-600 truncate">
+                        {{res.first_name}} {{res.last_name}}
+                      </div>
+<!--                      <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">-->
+<!--                        &lt;!&ndash; Heroicon name: mail &ndash;&gt;-->
+<!--                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">-->
+<!--                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />-->
+<!--                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />-->
+<!--                        </svg>-->
+<!--                        <span class="truncate">ricardo.cooper@example.com</span>-->
+<!--                      </div>-->
+                    </div>
+                    <div class="hidden md:block">
+                      <div>
+                        <div class="text-sm leading-5 text-gray-900">
+                          Applied on
+                          <time datetime="2020-01-07">January 7, 2020</time>
+                        </div>
+                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
+                          <!-- Heroicon name: check-circle -->
+                          <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                          </svg>
+                          Completed phone screening
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <!-- Heroicon name: chevron-right -->
+                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-template #noResults>
+      <img src="assets/undraw/undraw_Taken_if77.svg" class="no-search-results" alt="No results" />
+      <div class="w-full absolute text-center top-50">
+        <label class="text-gray-800">No search results.</label>
+      </div>
+    </ng-template>
   </ng-container>
-  <ng-template #noResults>
+  <ng-template #searchAnything>
     <img src="assets/undraw/undraw_searching_p5ux.svg" class="no-search-results" alt="No results" />
   </ng-template>
 </ion-content>

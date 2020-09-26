@@ -24,10 +24,6 @@ export class AuthService extends RestService{
     return this.httpClient.post<Response<Login>>(`${environment.apiUrl}/login`, loginData, {})
     .toPromise()
     .then(async res => {
-      // get current business create a pivot model relating users to a business
-      // const businesses = res.data.user.business.filter((business) => {
-      //   return business.owner_id === res.data.user.id;
-      // });
       await set(StorageKeys.AccessToken, res.data.token);
       await set(StorageKeys.User, res.data.user);
       return res;
