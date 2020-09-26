@@ -33,8 +33,8 @@ export class SearchPage implements OnInit, OnDestroy {
   }
 
   onInputChange(query: string) {
-    if (query.length == 0 || query == '') {
-      this.results = undefined;
+    if (query.length < 3 || query == '') {
+      this.clearResults();
     } else {
       this.inputDebouncerSubject.next(query);
       console.log(this.results);
@@ -45,11 +45,21 @@ export class SearchPage implements OnInit, OnDestroy {
     this.inputDebouncerSub = this.inputDebouncerSubject.pipe(
       debounceTime(250),
       distinctUntilChanged()
-    ).subscribe((query: string) =>
+    ).subscribe((query: string) => (query) ?
       this.profileService.searchUser(query)
         .then((res: User[]) =>
           this.results = res
-        )
+        ): undefined
     );
+  }
+
+  clearResults() {
+    this.query = undefined;
+    this.results = undefined;
+    console.log('clear');
+  }
+
+  openProfile(userId: number) {
+    console.log('open profile');
   }
 }
