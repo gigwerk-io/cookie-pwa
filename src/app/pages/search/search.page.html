@@ -44,8 +44,9 @@
       </form>
     </div>
   </div>
-  <button *ngIf="isFocused" class="outline-none focus:outline-none mr-3 my-auto text-lg inline-flex bg-transparent">
-    Cancel
+
+  <button (click)="clearResults()" class="focus:outline-none mr-3 my-auto text-lg inline-flex bg-transparent">
+    Clear
   </button>
 </gig-toolbar>
 <ion-content>
@@ -54,7 +55,7 @@
       <div class="bg-white shadow overflow-hidden sm:rounded-md">
         <ul>
           <li *ngFor="let res of results">
-            <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+            <div (click)="openProfile(res.id)" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
               <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 flex items-center">
                   <div class="flex-shrink-0">
@@ -64,29 +65,6 @@
                     <div>
                       <div class="text-sm leading-5 font-medium text-gray-600 truncate">
                         {{res.first_name}} {{res.last_name}}
-                      </div>
-<!--                      <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">-->
-<!--                        &lt;!&ndash; Heroicon name: mail &ndash;&gt;-->
-<!--                        <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">-->
-<!--                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />-->
-<!--                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />-->
-<!--                        </svg>-->
-<!--                        <span class="truncate">ricardo.cooper@example.com</span>-->
-<!--                      </div>-->
-                    </div>
-                    <div class="hidden md:block">
-                      <div>
-                        <div class="text-sm leading-5 text-gray-900">
-                          Applied on
-                          <time datetime="2020-01-07">January 7, 2020</time>
-                        </div>
-                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
-                          <!-- Heroicon name: check-circle -->
-                          <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                          </svg>
-                          Completed phone screening
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -98,7 +76,7 @@
                   </svg>
                 </div>
               </div>
-            </a>
+            </div>
           </li>
         </ul>
       </div>
