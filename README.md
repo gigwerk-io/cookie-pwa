@@ -46,6 +46,18 @@
     public foo(): someType {
         this.myFooLogic();
     }
+    
+#### Don't do this
+    public constructor(public router: Router) {
+    }
+    
+#### Do this
+- We should refrain from using the angular router as it does not provide page transition animations
+out of the box like the ionic nav controller this is one of the few things we would use from ionic.
+```
+public constructor(public navCtrl: NavController) {
+}
+``` 
 ## Useful Tidbits
 - If you're trying to build something really complicated to do something simple, check to see if it's already been built or there's something in the code that can help make that thing you're making.
 - Use the `alertService` to alert the user with some useful message. The API is already built in and there's a few examples in the codebase already.

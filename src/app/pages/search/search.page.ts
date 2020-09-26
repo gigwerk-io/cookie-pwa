@@ -1,38 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import { SearchService } from 'src/app/utils/services/search/search.service';
-import {FormGroup, Validators, FormControl} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
+import {Subject, Subscription} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {ProfileService} from '../../utils/services/http/User/profile.service';
+import {User} from '../../utils/interfaces/models/User';
 
 @Component({
   selector: 'gig-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
-export class SearchPage implements OnInit {
-  results: any[];
+export class SearchPage implements OnInit, OnDestroy {
+  results: User[];
+  query: string;
+  isFocused: boolean = false;
+
+  // Observable for debouncing input changes
+  private inputDebouncerSubject: Subject<string> = new Subject();
+  private inputDebouncerSub: Subscription;
 
   constructor(
-    public router: Router,
-    private searchService: SearchService
+    public navCtrl: NavController,
+    public profileService: ProfileService
   ) { }
 
-  form = new FormGroup({
-    searchInput: new FormControl('', Validators.required),
-  });
-
   ngOnInit() {
-    
+    this.loadInputSubject();
   }
 
-  searchUsers(usernameNameEmail) {
-    return this.searchService.searchUsers(usernameNameEmail.searchInput).then(res => {
-      console.log(res.data);
-      if (res.data.length > 1) {
-        return this.results = res.data;
-      } else {
-        return this.results = null;
-      }
-    });
+  ngOnDestroy() {
+    this.inputDebouncerSub.unsubscribe();
   }
 
+  onInputChange(query: string) {
+    if (query.length == 0 || query == '') {
+      this.results = undefined;
+    } else {
+      this.inputDebouncerSubject.next(query);
+      console.log(this.results);
+    }
+  }
+
+  loadInputSubject() {
+    this.inputDebouncerSub = this.inputDebouncerSubject.pipe(
+      debounceTime(250),
+      distinctUntilChanged()
+    ).subscribe((query: string) =>
+      this.profileService.searchUser(query)
+        .then((res: User[]) =>
+          this.results = res
+        )
+    );
+  }
 }
