@@ -9,4 +9,5 @@ export interface AlertOptions {
     title: string,
     callback: (..._: any) => any,
   }
+  showCloseButton?: boolean
 }

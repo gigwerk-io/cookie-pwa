@@ -18,7 +18,8 @@
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
           <!-- More button -->
-          <button (click)="openMoreModal()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+          <button (click)="openMoreModal()"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
             <img class="block w-10" src="assets/icon/interface/more.svg" alt="more button"/>
           </button>
         </div>
@@ -140,9 +141,12 @@
 
         <ng-container *ngIf="jobAction">
           <span *ngIf="jobAction.button" class="px-3 absolute w-full" style="top: 90%">
-            <button (click)="jobAction.callback()" type="button"
+            <button [disabled]="loading" (click)="jobAction.callback()" type="button"
                     class="justify-center w-full shadow-md inline-flex items-center px-4 py-3 border border-transparent text-xl leading-6 font-medium rounded-full text-white bg-{{jobAction.button.color}}-600 hover:bg-{{jobAction.button.color}}-500 focus:outline-none focus:border-{{jobAction.button.color}}-700 focus:shadow-outline-{{jobAction.button.color}} active:bg-{{jobAction.button.color}}-700 transition ease-in-out duration-150">
-              {{jobAction.button.text}}
+              <ng-container *ngIf="!loading">
+                {{jobAction.button.text}}
+              </ng-container>
+              <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
             </button>
           </span>
         </ng-container>

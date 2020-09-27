@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
 import {ActivatedRoute} from '@angular/router';
 import {Job} from '../../utils/interfaces/responses/Marketplace';
@@ -7,6 +7,9 @@ import {Status, StatusConst} from '../../utils/interfaces/enum/Status';
 import {Intensity, IntensityConst} from '../../utils/interfaces/enum/Intensity';
 import {ModalContentComponent, ModalOptions} from '../../utils/interfaces/enum/ModalOptions';
 import {ModalService} from '../../utils/services/internal/components/modal/modal.service';
+import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
+import {FreelancerActionsService} from '../../utils/services/http/Marketplace/freelancer-actions.service';
+import {Events} from '../../utils/services/internal/events';
 
 interface JobAction {
   id: number,
@@ -73,7 +76,7 @@ interface JobAction {
   templateUrl: './job-details.page.html',
   styleUrls: ['./job-details.page.scss'],
 })
-export class JobDetailsPage implements OnInit {
+export class JobDetailsPage implements OnInit, OnDestroy {
   feed: 'details' | 'checklist' = 'details';
   jobDetail: Job;
   jobStatus: Status;
@@ -90,7 +93,33 @@ export class JobDetailsPage implements OnInit {
         text: 'Accept Job',
         color: 'green'
       },
-      callback: () => console.log('job is acceptable')
+      callback: async () => {
+        this.loading = true;
+        await this.freelancerActionsService.acceptJob(this.jobDetail.id)
+        .then(async message => {
+          await this.loadJob();
+          await this.alertService.show({
+            alertMessage: message,
+            color: 'green',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          });
+        })
+        .catch(e =>
+          this.alertService.show({
+            alertMessage: e.error.message,
+            color: 'red',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          }));
+        this.loading = false;
+      }
     },
     {
       id: 3,
@@ -108,7 +137,33 @@ export class JobDetailsPage implements OnInit {
         text: 'Arrive at Job Site',
         color: 'blue'
       },
-      callback: () => console.log('Worker has been approved')
+      callback: async () => {
+        this.loading = true;
+        await this.freelancerActionsService.arriveToJob(this.jobDetail.id)
+        .then(async message => {
+          await this.loadJob();
+          await this.alertService.show({
+            alertMessage: message,
+            color: 'blue',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          });
+        })
+        .catch(e =>
+          this.alertService.show({
+            alertMessage: e.error.message,
+            color: 'red',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          }));
+        this.loading = false;
+      }
     },
     {
       id: 6,
@@ -116,26 +171,76 @@ export class JobDetailsPage implements OnInit {
         text: 'Mark Job as Completed',
         color: 'green'
       },
-      callback: () => console.log('job is in progress')
+      callback: async () => {
+        this.loading = true;
+        await this.freelancerActionsService.completeJob(this.jobDetail.id)
+        .then(async message => {
+          await this.loadJob();
+          await this.alertService.show({
+            alertMessage: message,
+            color: 'green',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          });
+        })
+        .catch(e =>
+          this.alertService.show({
+            alertMessage: e.error.message,
+            color: 'red',
+            position: 'top-0',
+            enterAnimation: 'top-slidedown',
+            leaveAnimation: 'top-slideup',
+            duration: 4000,
+            showCloseButton: false
+          }));
+        this.loading = false;
+      }
     }
   ];
   jobAction: JobAction;
+  loading: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
     public feedService: FeedService,
-    public modalService: ModalService
+    public freelancerActionsService: FreelancerActionsService,
+    public modalService: ModalService,
+    public alertService: AlertService,
+    public events: Events
   ) {
   }
 
   ngOnInit() {
     this.loadJob();
+    this.events.subscribe('withdrawProposal',
+      async (res: { message: string }) => {
+        this.loading = true;
+        await this.loadJob();
+        await this.alertService.show({
+          alertMessage: res.message,
+          color: 'red',
+          position: 'top-0',
+          enterAnimation: 'top-slidedown',
+          leaveAnimation: 'top-slideup',
+          duration: 4000,
+          showCloseButton: false
+        });
+        this.loading = false;
+      }
+    );
   }
 
-  private loadJob() {
-    const jobId: number = this.activatedRoute.snapshot.params.id;
-    this.feedService.showJob(jobId)
+  ngOnDestroy() {
+    this.events.unsubscribe('withdrawProposal');
+  }
+
+  private async loadJob() {
+    const jobId: number = await this.activatedRoute.snapshot.params.id;
+    await this.feedService.showJob(jobId)
     .then((job: Job) => {
       this.jobDetail = job;
       this.jobStatus = StatusConst[job.status.split(' ').join('')];
@@ -159,16 +264,71 @@ export class JobDetailsPage implements OnInit {
   openMoreModal() {
     this.modalService.show({
       position: 'middle',
-      component: JobDetailsMoreModal
+      component: JobDetailsMoreModal,
+      data: this.jobDetail
     });
   }
 }
 
 @Component({
   selector: 'gig-job-detail-more-modal',
-  template: ``,
+  template: `
+
+    <div>
+      <div class="text-center">
+        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+          Options
+        </h3>
+        <div class="mt-2" *ngIf="modalOptions.data">
+          <span *ngIf="modalOptions.data.action == 3 || modalOptions.data.action == 5" class="flex w-full rounded-md shadow-sm">
+            <button [disabled]="loading" (click)="withdrawProposal()" type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              <ng-container *ngIf="!loading">
+                Withdraw
+              </ng-container>
+              <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
+            </button>
+          </span>
+        </div>
+        <div class="mt-2">
+          <span class="flex w-full rounded-md shadow-sm">
+            <button (click)="reportAbuse()" type="button"
+                    class="inline-flex justify-center w-full rounded-md border border-solid px-4 py-2 bg-gray-100 border border-red-500 text-base leading-6 font-medium text-red-500 shadow-sm hover:bg-gray-200 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              Report Abuse
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  `,
   styleUrls: ['./job-details.page.scss']
 })
 export class JobDetailsMoreModal implements ModalContentComponent {
   modalOptions: ModalOptions;
+  loading: boolean = false;
+
+  constructor(
+    public freelancerActionsService: FreelancerActionsService,
+    public modalService: ModalService,
+    public events: Events
+  ) {
+  }
+
+  withdrawProposal() {
+    this.loading = true;
+    const jobId: number = this.modalOptions.data.id;
+    this.freelancerActionsService.withdrawProposal(jobId)
+    .then((message: string) => {
+      this.events.publish('withdrawProposal', {message: message});
+      this.modalService.dismiss();
+    })
+    .catch(e => {
+      this.events.publish('withdrawProposal', {message: e.error.message});
+      this.modalService.dismiss();
+    });
+  }
+
+  reportAbuse() {
+    console.log('report abuse');
+  }
 }

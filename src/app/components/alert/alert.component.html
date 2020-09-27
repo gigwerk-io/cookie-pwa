@@ -26,7 +26,7 @@
             </div>
           </ng-container>
 
-          <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+          <div *ngIf="showCloseButton" class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
             <button (click)="show = false" type="button" class="-mr-1 flex p-2 rounded-md hover:bg-{{color}}-500 focus:outline-none focus:bg-{{color}}-500 transition ease-in-out duration-150" aria-label="Dismiss">
               <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
