@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../utils/services/http/Auth/auth.service';
+import {LoginService} from '../../utils/services/http/Auth/login.service';
 import {NavController} from '@ionic/angular';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -18,7 +18,7 @@ export class SignInWithGigwerkPage implements OnInit {
   });
 
   constructor(
-    public authService: AuthService,
+    public authService: LoginService,
     public navCtrl: NavController,
     public alertService: AlertService,
     private fb: FormBuilder

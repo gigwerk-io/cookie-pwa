@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {AuthService} from '../../utils/services/http/Auth/auth.service';
+import {LoginService} from '../../utils/services/http/Auth/login.service';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 import {Response} from '../../utils/interfaces/responses/Response';
 
@@ -13,7 +13,7 @@ export class AccountPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public authService: AuthService,
+    public authService: LoginService,
     public alertService: AlertService
   ) { }
 

@@ -63,7 +63,7 @@
               <div class="my-auto inline-flex">
                 <gig-image [imgSrc]="jobDetail.customer.profile.image" imgClass="overflow-hidden rounded-full h-12 w-12"
                            [imgAlt]="jobDetail.customer.first_name"></gig-image>
-                <p class="ml-2 text-sm my-auto font-semibold">
+                <p class="ml-2 text-sm my-auto font-semibold truncate">
                   {{jobDetail.customer.first_name}} {{jobDetail.customer.last_name}}
                 </p>
               </div>
@@ -76,7 +76,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                 </ng-template>
-                <p class="text-sm pl-2 font-semibold">
+                <p class="text-sm pl-2 font-semibold truncate">
                   {{jobStatus.name}}
                 </p>
               </div>
@@ -192,6 +192,11 @@
         </ng-template>
       </div>
     </ng-container>
-    <ng-container *ngSwitchCase="'checklist'"></ng-container>
+    <ng-container *ngSwitchCase="'checklist'">
+      <img src="assets/undraw/undraw_under_construction_46pa.svg" class="coming-soon" alt="Coming soon" />
+      <div class="w-full absolute text-center top-50">
+        <label class="text-gray-800">Coming soon...</label>
+      </div>
+    </ng-container>
   </ng-container>
 </ion-content>

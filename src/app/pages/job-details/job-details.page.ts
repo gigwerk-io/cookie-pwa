@@ -10,6 +10,7 @@ import {ModalService} from '../../utils/services/internal/components/modal/modal
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 import {FreelancerActionsService} from '../../utils/services/http/Marketplace/freelancer-actions.service';
 import {Events} from '../../utils/services/internal/events';
+import {Response} from '../../utils/interfaces/responses/Response';
 
 interface JobAction {
   id: number,
@@ -96,10 +97,10 @@ export class JobDetailsPage implements OnInit, OnDestroy {
       callback: async () => {
         this.loading = true;
         await this.freelancerActionsService.acceptJob(this.jobDetail.id)
-        .then(async message => {
+        .then(async (res: Response<null>) => {
           await this.loadJob();
           await this.alertService.show({
-            alertMessage: message,
+            alertMessage: res.message,
             color: 'green',
             position: 'top-0',
             enterAnimation: 'top-slidedown',
@@ -140,10 +141,10 @@ export class JobDetailsPage implements OnInit, OnDestroy {
       callback: async () => {
         this.loading = true;
         await this.freelancerActionsService.arriveToJob(this.jobDetail.id)
-        .then(async message => {
+        .then(async (res: Response<null>) => {
           await this.loadJob();
           await this.alertService.show({
-            alertMessage: message,
+            alertMessage: res.message,
             color: 'blue',
             position: 'top-0',
             enterAnimation: 'top-slidedown',
@@ -174,10 +175,10 @@ export class JobDetailsPage implements OnInit, OnDestroy {
       callback: async () => {
         this.loading = true;
         await this.freelancerActionsService.completeJob(this.jobDetail.id)
-        .then(async message => {
+        .then(async (res: Response<null>) => {
           await this.loadJob();
           await this.alertService.show({
-            alertMessage: message,
+            alertMessage: res.message,
             color: 'green',
             position: 'top-0',
             enterAnimation: 'top-slidedown',
@@ -245,10 +246,10 @@ export class JobDetailsPage implements OnInit, OnDestroy {
   private async loadJob() {
     const jobId: number = await this.activatedRoute.snapshot.params.id;
     await this.feedService.showJob(jobId)
-    .then((job: Job) => {
-      this.jobDetail = job;
-      this.jobStatus = StatusConst[job.status.split(' ').join('')];
-      this.jobAction = this.jobActions[job.action - 1];
+    .then((res: Response<Job>) => {
+      this.jobDetail = res.data;
+      this.jobStatus = StatusConst[res.data.status.split(' ').join('')];
+      this.jobAction = this.jobActions[res.data.action - 1];
     });
   }
 
@@ -292,30 +293,69 @@ export class JobDetailsPage implements OnInit, OnDestroy {
   template: `
 
     <div>
-      <div class="text-center">
-        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-          Options
-        </h3>
-        <div class="mt-2" *ngIf="modalOptions.data">
-          <span *ngIf="modalOptions.data.action == 3 || modalOptions.data.action == 5" class="flex w-full rounded-md shadow-sm">
-            <button [disabled]="loading" (click)="withdrawProposal()" type="button"
-                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              <ng-container *ngIf="!loading">
-                Withdraw
-              </ng-container>
-              <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
-            </button>
-          </span>
-        </div>
-        <div class="mt-2">
-          <span class="flex w-full rounded-md shadow-sm">
-            <button (click)="reportAbuse()" type="button"
-                    class="inline-flex justify-center w-full rounded-md border border-solid px-4 py-2 bg-gray-100 border border-red-500 text-base leading-6 font-medium text-red-500 shadow-sm hover:bg-gray-200 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              Report Abuse
-            </button>
-          </span>
-        </div>
-      </div>
+      <ng-container [ngSwitch]="page">
+        <ng-container *ngSwitchCase="'options'">
+          <div class="text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+              Options
+            </h3>
+            <div class="mt-2" *ngIf="modalOptions.data">
+            <span *ngIf="modalOptions.data.action == 3 || modalOptions.data.action == 5" class="flex w-full rounded-md shadow-sm">
+              <button [disabled]="loading" (click)="withdrawProposal()" type="button"
+                      class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                <ng-container *ngIf="!loading">
+                  Withdraw
+                </ng-container>
+                <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
+              </button>
+            </span>
+            </div>
+            <div class="mt-2">
+              <span class="flex w-full rounded-md shadow-sm">
+                <button (click)="page = 'report-abuse'" type="button"
+                        class="inline-flex justify-center w-full rounded-md border border-solid px-4 py-2 bg-gray-100 border border-red-500 text-base leading-6 font-medium text-red-500 shadow-sm hover:bg-gray-200 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                  Report Abuse
+                </button>
+              </span>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'report-abuse'">
+          <div class="block">
+            <div class="flex-1 flex justify-start justify-center items-center items-stretch">
+              <div class="absolute ml-2 mt-3 top-0 left-0 flex items-center sm:hidden">
+                <!-- Back button -->
+                <button (click)="page = 'options'"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                        aria-label="Main menu" aria-expanded="false">
+                  <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button"/>
+                </button>
+              </div>
+              <div class="flex-shrink-0 flex items-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                  Report Abuse
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="block">
+            <div class="mt-2 sm:col-span-2">
+              <label for="message" class="block text-sm font-medium leading-5 text-gray-700">Message</label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <textarea id="message" placeholder="Please describe the issue..." rows="4" class="form-textarea py-3 px-4 block w-full transition ease-in-out duration-150"></textarea>
+              </div>
+            </div>
+            <div class="mt-2">
+              <span class="flex w-full rounded-md shadow-sm">
+                <button (click)="reportAbuse()" type="button"
+                        class="inline-flex justify-center w-full rounded-md border border-solid px-4 py-2 bg-gray-100 border border-red-500 text-base leading-6 font-medium text-red-500 shadow-sm hover:bg-gray-200 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                  Submit Report
+                </button>
+              </span>
+            </div>
+          </div>          
+        </ng-container>
+      </ng-container>
     </div>
   `,
   styleUrls: ['./job-details.page.scss']
@@ -323,10 +363,12 @@ export class JobDetailsPage implements OnInit, OnDestroy {
 export class JobDetailsMoreModal implements ModalContentComponent {
   modalOptions: ModalOptions;
   loading: boolean = false;
+  page: string = 'options';
 
   constructor(
     public freelancerActionsService: FreelancerActionsService,
     public modalService: ModalService,
+    public alertService: AlertService,
     public events: Events
   ) {
   }
@@ -335,8 +377,8 @@ export class JobDetailsMoreModal implements ModalContentComponent {
     this.loading = true;
     const jobId: number = this.modalOptions.data.id;
     this.freelancerActionsService.withdrawProposal(jobId)
-    .then((message: string) => {
-      this.events.publish('withdrawProposal', {message: message});
+    .then((res: Response<null>) => {
+      this.events.publish('withdrawProposal', {message: res.message});
       this.modalService.dismiss();
     })
     .catch(e => {
@@ -346,6 +388,14 @@ export class JobDetailsMoreModal implements ModalContentComponent {
   }
 
   reportAbuse() {
-    console.log('report abuse');
+    this.modalService.dismiss();
+    this.alertService.show({
+      alertMessage: 'Thank you for submitting this report! We will look into it as soon as possible.',
+      color: 'blue',
+      position: 'top-0',
+      enterAnimation: 'top-slidedown',
+      leaveAnimation: 'top-slideup',
+      duration: 4000
+    })
   }
 }
