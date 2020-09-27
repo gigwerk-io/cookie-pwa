@@ -203,6 +203,10 @@ export class JobDetailsPage implements OnInit, OnDestroy {
   jobAction: JobAction;
   loading: boolean = false;
 
+  // For animation purposes
+  toggleSlideShowOn: boolean = false;
+  toggleSlideShowOff: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
@@ -267,6 +271,19 @@ export class JobDetailsPage implements OnInit, OnDestroy {
       component: JobDetailsMoreModal,
       data: this.jobDetail
     });
+  }
+
+  toggleSlideShow() {
+    if (this.toggleSlideShowOn) {
+      this.toggleSlideShowOff = true;
+      this.toggleSlideShowOn = false;
+    } else if (this.toggleSlideShowOff) {
+      this.toggleSlideShowOn = true;
+      this.toggleSlideShowOff = false;
+    } else {
+      this.toggleSlideShowOn = true;
+      this.toggleSlideShowOff = false;
+    }
   }
 }
 
