@@ -85,7 +85,7 @@ export class HomePage implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'gig-modal-content',
+  selector: 'gig-home-filter-modal',
   template: `
     <div>
       <div class="text-center">

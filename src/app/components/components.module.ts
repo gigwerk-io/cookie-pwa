@@ -7,6 +7,7 @@ import {JobCardComponent} from './job-card/job-card.component';
 import {IonicModule} from '@ionic/angular';
 import {ModalComponent} from './modal/modal.component';
 import {ModalHostDirective} from '../utils/directives/components/modal/modal-host.directive';
+import {ImageComponent} from './image/image.component';
 
 const COMPONENTS = [
   AlertComponent,
@@ -14,6 +15,7 @@ const COMPONENTS = [
   JobCardComponent,
   ToolbarComponent,
   ModalComponent,
+  ImageComponent,
   ModalHostDirective
 ];
 const MODULES = [];
