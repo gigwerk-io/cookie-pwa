@@ -15,35 +15,23 @@ export class FeedService extends RestService {
     super(httpClient);
   }
 
-  public jobFeed(): Promise<Job[]> {
+  public jobFeed(): Promise<Response<Job[]>> {
     return this.makeHttpRequest<Response<Job[]>>(`marketplace/feed`, 'GET')
-    .then(httpRes => httpRes.toPromise()
-    .then((res: Response<Job[]>) => {
-      return res.data;
-    }));
+    .then(httpRes => httpRes.toPromise());
   }
 
-  public myJobRequests(): Promise<Job[]> {
+  public myJobRequests(): Promise<Response<Job[]>> {
     return this.makeHttpRequest<Response<Job[]>>(`marketplace/me`, 'GET')
-    .then(httpRes => httpRes.toPromise()
-    .then((res: Response<Job[]>) => {
-      return res.data;
-    }));
+    .then(httpRes => httpRes.toPromise());
   }
 
-  public myProposals(): Promise<Job[]> {
+  public myProposals(): Promise<Response<Job[]>> {
     return this.makeHttpRequest<Response<Job[]>>(`marketplace/proposals`, 'GET')
-    .then(httpRes => httpRes.toPromise()
-    .then((res: Response<Job[]>) => {
-      return res.data;
-    }));
+    .then(httpRes => httpRes.toPromise());
   }
 
-  public showJob(id: number): Promise<Job> {
+  public showJob(id: number): Promise<Response<Job>> {
     return this.makeHttpRequest<Response<Job>>(`marketplace/job/${id}`, 'GET')
-    .then(httpRes => httpRes.toPromise()
-    .then((res: Response<Job>) => {
-      return res.data;
-    }));
+    .then(httpRes => httpRes.toPromise());
   }
 }

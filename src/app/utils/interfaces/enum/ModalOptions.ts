@@ -1,8 +1,7 @@
-import {ElementRef} from '@angular/core';
-
 export interface ModalOptions {
   position: 'top' | 'middle' | 'bottom',
-  component: any
+  component: any,
+  data?: any
 }
 
 export interface ModalContentComponent {

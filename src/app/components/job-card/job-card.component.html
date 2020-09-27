@@ -4,8 +4,7 @@
        style="height: 175px;">
     <div class="flex justify-between">
       <p class="text-sm font-semibold">
-        <!--        1:00pm - 1:45pm, Tue, Oct. 8-->
-        {{completeByDate | date: 'h:mm aa, EE, LLL. d'}}
+        {{((completeAtDate) ? completeAtDate : completeByDate) | date: 'h:mm aa, EE, LLL. d'}}
       </p>
       <div *ngIf="distance" class="inline-flex">
         <ion-icon class="text-green-600 text-xl pr-1" src="assets/icon/interface/pin.svg"></ion-icon>
@@ -37,7 +36,7 @@
       </div>
       <div class="inline-flex" *ngIf="jobStatus.name === 'Available'">
         <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
-        <p class="text-sm font-semibold">{{views}} Views</p>
+        <p class="text-sm font-semibold">{{views | number: '1.0'}} Views</p>
       </div>
       <div class="inline-flex" *ngIf="jobStatus.name !== 'Complete'">
         <ion-icon src="assets/icon/interface/gauge.svg" class="text-xl pr-2 text-{{displayIntensity(intensity.id).color}}-600"></ion-icon>

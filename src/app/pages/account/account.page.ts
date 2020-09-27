@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {AuthService} from '../../utils/services/http/Auth/auth.service';
+import {LoginService} from '../../utils/services/http/Auth/login.service';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
+import {Response} from '../../utils/interfaces/responses/Response';
 
 @Component({
   selector: 'gig-account',
@@ -12,7 +13,7 @@ export class AccountPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public authService: AuthService,
+    public authService: LoginService,
     public alertService: AlertService
   ) { }
 
@@ -21,7 +22,7 @@ export class AccountPage implements OnInit {
 
   signOut() {
     this.authService.endSession()
-      .then((res) => {
+      .then((res: Response<string>) => {
         this.alertService.show({alertMessage: res.message, color: 'green', position: 'top-0', enterAnimation: 'top-slidedown', leaveAnimation: 'top-slideup', duration: 4000})
         this.navCtrl.navigateRoot('sign-in-with-gigwerk');
       });

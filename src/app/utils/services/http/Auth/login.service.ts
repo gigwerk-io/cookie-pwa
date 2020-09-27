@@ -10,7 +10,7 @@ import {StorageKeys} from '../../../interfaces/enum/Constants';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends RestService{
+export class LoginService extends RestService{
 
   constructor(
     public httpClient: HttpClient

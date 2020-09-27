@@ -5,6 +5,7 @@ import {NavController} from '@ionic/angular';
 import {ModalService} from '../../utils/services/internal/components/modal/modal.service';
 import {ModalContentComponent, ModalOptions} from '../../utils/interfaces/enum/ModalOptions';
 import {Events} from '../../utils/services/internal/events';
+import {Response} from '../../utils/interfaces/responses/Response';
 
 interface JobsFilter {
   orderBy: 'Price' | 'Distance',
@@ -55,9 +56,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   private loadJobs() {
     this.feedService.jobFeed()
-    .then((feed: Job[]) => this.allJobs = feed);
+    .then((res: Response<Job[]>) => this.allJobs = res.data);
     this.feedService.myProposals()
-    .then((feed: Job[]) => this.myJobs = feed);
+    .then((res: Response<Job[]>) => this.myJobs = res.data);
 
     this.setJobsFilter();
   }
@@ -85,7 +86,7 @@ export class HomePage implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'gig-modal-content',
+  selector: 'gig-home-filter-modal',
   template: `
     <div>
       <div class="text-center">
