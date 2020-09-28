@@ -3,7 +3,9 @@
     <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
       <!-- chat button -->
       <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-        <img class="block h-6 w-6" src="assets/icon/interface/chat.svg" alt="chat button" />
+        <img class="block h-6 w-6" src="assets/icon/interface/chat.svg" alt="chat button"/>
+        <span class="border-2 border-white absolute block h-4 w-4 transform -translate-y-1/2 translate-x-1/2 rounded-full text-white shadow-solid bg-red-400"
+              style="transform: translate(0.7rem, -0.5rem)"></span>
       </button>
     </div>
     <div class="flex-shrink-0 flex items-center">
@@ -13,31 +15,85 @@
     </div>
     <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
       <!-- User account button -->
-      <button (click)="navCtrl.navigateForward('/app/notifications/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-        <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button" />
+      <button (click)="navCtrl.navigateForward('/app/notifications/account')"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+        <img class="block h-6 w-6" src="assets/icon/interface/user.svg" alt="user account button"/>
       </button>
     </div>
   </div>
 </gig-header>
 <gig-toolbar>
-  <button (click)="feed = 'all'" [ngClass]="feed === 'all' ? 'active' : ''" class="w-50 h-full text-center focus:outline-none">
+  <button (click)="feed = 'all'" [ngClass]="feed === 'all' ? 'active' : ''"
+          class="w-50 h-full text-center focus:outline-none">
     All
   </button>
-  <button (click)="feed = 'unread'" [ngClass]="feed === 'unread' ? 'active' : ''" class="w-50 h-full text-center focus:outline-none">
+  <button (click)="feed = 'unread'" [ngClass]="feed === 'unread' ? 'active' : ''"
+          class="w-50 h-full text-center focus:outline-none">
     Unread
   </button>
 </gig-toolbar>
 <ion-content>
   <ng-container [ngSwitch]="feed">
     <ng-container *ngSwitchCase="'all'">
-      <ng-container *ngIf="allNotifications; else noNotifications"></ng-container>
+      <ng-container *ngIf="allNotifications; else noNotifications">
+        <div class="px-3 py-4 bg-white flex shadow-md flex block">
+          <div class="flex-1 flex items-center">
+            <span class="h-10 my-auto p-2 rounded-full bg-green-500">
+              <svg class="w-6 h-6 m-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                </path>
+              </svg>
+            </span>
+
+            <p class="pl-3 text-bold sm:truncate">
+              This is an unread notification
+            </p>
+          </div>
+          <div class="my-auto">
+            <!-- Heroicon name: chevron-right -->
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </div>
+        </div>
+        <div class="px-3 py-4 bg-gray-200 flex shadow-md flex block">
+          <div class="flex-1 flex items-center">
+            <span class="h-10 my-auto p-2 rounded-full bg-green-500">
+              <svg class="w-6 h-6 m-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                </path>
+              </svg>
+            </span>
+
+            <p class="pl-3 text-bold sm:truncate">
+              This is a read notification
+            </p>
+          </div>
+          <div class="my-auto">
+            <!-- Heroicon name: chevron-right -->
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </div>
+        </div>
+      </ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'unread'">
       <ng-container *ngIf="unreadNotifications; else noNotifications"></ng-container>
     </ng-container>
   </ng-container>
   <ng-template #noNotifications>
-    <img src="assets/undraw/undraw_inbox_cleanup_w2ur.svg" class="no-notifications" alt="No notifications" />
+    <img src="assets/undraw/undraw_inbox_cleanup_w2ur.svg" class="no-notifications" alt="No notifications"/>
     <div class="w-full absolute text-center top-50">
       <label class="text-gray-800">No new notifications</label>
     </div>

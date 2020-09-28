@@ -8,8 +8,8 @@ import {NavController} from '@ionic/angular';
 })
 export class NotificationsPage implements OnInit {
   feed: 'all' | 'unread' = 'all';
-  allNotifications: any[];
-  unreadNotifications: any[];
+  allNotifications: any[] = [1];
+  unreadNotifications: any[] = [1];
 
   constructor(
     public navCtrl: NavController
