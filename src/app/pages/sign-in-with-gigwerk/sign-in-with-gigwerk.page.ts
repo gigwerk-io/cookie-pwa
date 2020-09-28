@@ -31,11 +31,10 @@ export class SignInWithGigwerkPage implements OnInit {
   signIn() {
     if (this.signInForm.valid) {
       this.authService.businessAppLogin(this.signInForm.value)
-      .then(() => {
-        this.navCtrl.navigateRoot('app/home');
-      })
-      .catch(e => {
-        console.log(e);
+      .then(() =>
+        this.navCtrl.navigateRoot('app/home')
+      )
+      .catch(e =>
         this.alertService.show({
           duration: 4000,
           alertMessage: e.error.message,
@@ -47,8 +46,8 @@ export class SignInWithGigwerkPage implements OnInit {
             title: 'Forgot Password',
             callback: () => console.log('Forgot password!')
           }
-        });
-      });
+        })
+      );
     }
   }
 }

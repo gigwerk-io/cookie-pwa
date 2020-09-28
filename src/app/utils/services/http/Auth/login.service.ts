@@ -10,7 +10,7 @@ import {StorageKeys} from '../../../interfaces/enum/Constants';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService extends RestService{
+export class LoginService extends RestService {
 
   constructor(
     public httpClient: HttpClient
@@ -32,15 +32,15 @@ export class LoginService extends RestService{
 
   public endSession(): Promise<Response<string>> {
     return this.makeHttpRequest<Response<string>>(`logout`, 'POST', {}, true)
-      .then(httpRes => httpRes.toPromise()
-        .then(async res => {
-          if (res.success) { // remove all storage constants
-            for (let key in StorageKeys) {
-              await remove(key);
-            }
-          }
-          return res;
-        }));
+    .then(httpRes => httpRes.toPromise()
+    .then(async res => {
+      if (res.success) { // remove all storage constants
+        for (let key in StorageKeys) {
+          await remove(key);
+        }
+      }
+      return res;
+    }));
   }
 
   public validateBusinessToken(): Promise<Response<ValidToken>> {
