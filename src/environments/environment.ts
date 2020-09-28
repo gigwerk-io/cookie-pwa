@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiRootUrl: 'http://local.gigwerk.io',
-  apiUrl: 'http://local.gigwerk.io/business/048d54b7-54fc-3e4e-87c5-d575ff867b84'
+  apiUrl: 'http://local.gigwerk.io/business/ea11187b-fba5-31c8-87b4-84928c0334d6'
 };
 
 /*

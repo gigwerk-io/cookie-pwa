@@ -1,0 +1,67 @@
+<ion-content scrollY="false">
+  <!-- header -->
+  <div class="z-102 fixed w-full">
+    <gig-header>
+      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Back button -->
+          <button (click)="navCtrl.back()"
+            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+            aria-label="Main menu" aria-expanded="false">
+            <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button" />
+          </button>
+        </div>
+        <div class="flex-shrink-0 flex items-center">
+          <h5 class="block font-medium text-black">Settings</h5>
+        </div>
+      </div>
+    </gig-header>
+  </div>
+
+  <div class="mt-16">
+    <ion-img style="height: 149px; margin-top: 95px; margin-bottom: 61px" src="assets/icon/Logo-1.png"></ion-img>
+  </div>
+
+  <ion-text>
+    <h1 class="text-center mx-2" style="font-size: 16px; font-weight: 100; font-family: 'Lato', sans-serif">
+      App settings and other preferences are managed on the Gigwerk App. Tap the
+      button below to manage global preferences across all your gigs.
+    </h1>
+  </ion-text>
+
+  <div class="text-center mt-10">
+    <ion-button href="http://www.gigwerk.io" shape="round" class="" style="width: 90%">Manage on
+      Gigwerk</ion-button>
+  </div>
+
+  <div style="margin-top: 85px">
+    <ion-text>
+      <p class="text-center mx-2 text-gray-500" style="
+          font-size: 14px;
+          font-weight: 100;
+          font-family: 'Lato', sans-serif;
+        ">
+        App version 3.2.1
+      </p>
+    </ion-text>
+    <ion-text>
+      <p class="text-center mx-10 text-gray-500 mt-2" style="
+          font-size: 14px;
+          font-weight: 300;
+          font-family: 'Lato', sans-serif;
+        ">
+        All symbols and logos shown are registered trademarks of their
+        respective entities.
+      </p>
+    </ion-text>
+    <ion-text>
+      <p class="text-center mx-10 text-gray-500 mt-2" style="
+          font-size: 14px;
+          font-weight: 100;
+          font-family: 'Lato', sans-serif;
+        ">
+        &copy; {{year}} Gigwerk Technologies LLC all rights reserved
+      </p>
+    </ion-text>
+  </div>
+</ion-content>
