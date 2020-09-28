@@ -33,7 +33,7 @@ export class SearchPage implements OnInit, OnDestroy {
   }
 
   onInputChange(query: string) {
-    if (query.length < 3 || query == '') {
+    if (query.length < 1 || query == '') {
       this.clearResults();
     } else {
       this.inputDebouncerSubject.next(query);
