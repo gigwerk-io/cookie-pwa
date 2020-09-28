@@ -52,7 +52,7 @@
     }
     
 #### Do this
-- We should refrain from using the angular router as it does not provide page transition animations
+We should refrain from using the angular router as it does not provide page transition animations
 out of the box like the ionic nav controller this is one of the few things we would use from ionic.
 ```
 public constructor(public navCtrl: NavController) {
@@ -61,3 +61,96 @@ public constructor(public navCtrl: NavController) {
 ## Useful Tidbits
 - If you're trying to build something really complicated to do something simple, check to see if it's already been built or there's something in the code that can help make that thing you're making.
 - Use the `alertService` to alert the user with some useful message. The API is already built in and there's a few examples in the codebase already.
+#### Events Service
+For event handling on the frontend we use the events service to help with communicating data between multiple components and services. It uses the Observables/Promise design pattern.
+
+        export class ListenerComponent implements OnInit, OnDestroy {
+            constructor(
+                public events: Events
+            ) {
+            }
+
+            ngOnInit() {
+                this.events.subscribe('topic', (data: DataType) => foo(data)); // listen to updates
+            }
+
+            ngOnDestroy() {
+                this.events.unsubscribe('topic'); // clean up so there's no memory leaks!
+            }
+        }
+        
+        
+        export class PublisherComponent {
+            constructor(
+                public events: Events
+            ) {
+                this.events.publish('topic', data);
+            }
+        }
+        
+#### Alerts Service
+        
+      reportAbuse() {
+        this.alertService.show({
+          alertMessage: 'Thank you for submitting this report! We will look into it as soon as possible.',
+          color: 'blue',
+          position: 'top-0',
+          enterAnimation: 'top-slidedown',
+          leaveAnimation: 'top-slideup',
+          duration: 4000
+        })
+      }
+      
+#### Modal Service
+With the modal service you have to create a content component to display within the modal first. We recommend you just slot it in right under the page component it'll appear in to keep things organized. Something like this.
+
+    @Component({
+        selector: 'gig-some-modal',
+        template: `
+            <div (click)="dismissModal()">Hello world!</div>
+        `,
+        styleUrls: ['some.page.scss']
+    })
+    export class SomeModal implements ModalContentComponent {
+        modalOptions: ModalOptions;
+        
+        constructor(
+            public modalService: ModalService
+        ) {}
+        
+        dismissModal() {
+            this.modalService.dismiss();
+        }
+    }
+
+Then you've got to use this component in the parent class component it lives in.
+      
+      export class SomeParentComponent {
+        
+        constructor(
+            public modalService: ModalService
+        ) {}
+        
+        openSomeModal() {
+            this.modalService.show({
+              position: 'middle',
+              component: SomeModal
+            });
+        }
+      }
+      
+#### Announcement Service
+The announcement service is used to tell the user when a request isn't fullfilled. Think http errors. Announcement service should be called primarily in a http service class.
+
+    public withdrawProposal(jobId: number): Promise<Response<null>> {
+        return this.makeHttpRequest<Response<null>>(`marketplace/job/${jobId}/withdraw`, 'POST')
+        .then(httpRes => httpRes.toPromise())
+        .catch((e: HttpErrorResponse) => {
+          console.log(e.status);
+          this.announcementService.show({
+            message: 'Something went wrong with this request.',
+            color: 'red'
+          });
+          return undefined;
+        });
+      }

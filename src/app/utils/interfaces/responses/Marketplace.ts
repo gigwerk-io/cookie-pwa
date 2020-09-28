@@ -27,11 +27,40 @@ export interface Job {
   customer: User,
   category: Category,
   job_status: Status,
-  job_intensity: Intensity
+  job_intensity: Intensity,
+  location?: Location,
+  proposals?: Proposal[]
 }
 
 export interface Category {
-  id: number;
-  name: string;
-  icon_image: string;
+  id: number,
+  name: string,
+  icon_image: string
+}
+
+export interface Location {
+  id: number,
+  marketplace_id: number,
+  street_address: string,
+  city: string,
+  state: string,
+  lat: number,
+  long: number,
+  zip: number,
+}
+
+export interface Proposal {
+  id: number,
+  marketplace_id: number,
+  arrived_at: any,
+  completed_at: any,
+  created_at: any,
+  proposal_status: Status,
+  rating: string,
+  review: string,
+  status: string,
+  status_id: number,
+  updated_at: any,
+  user: User,
+  user_id: number
 }

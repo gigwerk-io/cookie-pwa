@@ -61,6 +61,7 @@
                   *ngFor="let job of myJobs"
                   [id]="job.id"
                   [category]="job.category.name"
+                  [completeAtDate]="job.status === 'Complete' ? job.proposals[0].completed_at : null"
                   [completeByDate]="job.complete_before"
                   [price]="job.price"
                   [views]="job.views"

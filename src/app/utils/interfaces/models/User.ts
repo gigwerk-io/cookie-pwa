@@ -1,8 +1,8 @@
 import { BusinessUser } from './BusinessUser';
+import {Business} from './Business';
 
 export interface User {
   id: number;
-  business_id: BusinessUser;
   first_name: string;
   last_name: string;
   username: string;
@@ -17,6 +17,7 @@ export interface User {
   updated_at: any;
   isActive: boolean;
   profile: UserProfile;
+  business: Business;
 }
 
 export interface UserProfile {
