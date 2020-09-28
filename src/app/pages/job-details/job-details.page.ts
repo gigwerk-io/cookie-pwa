@@ -108,17 +108,7 @@ export class JobDetailsPage implements OnInit, OnDestroy {
             duration: 4000,
             showCloseButton: false
           });
-        })
-        .catch(e =>
-          this.alertService.show({
-            alertMessage: e.error.message,
-            color: 'red',
-            position: 'top-0',
-            enterAnimation: 'top-slidedown',
-            leaveAnimation: 'top-slideup',
-            duration: 4000,
-            showCloseButton: false
-          }));
+        });
         this.loading = false;
       }
     },
@@ -152,17 +142,7 @@ export class JobDetailsPage implements OnInit, OnDestroy {
             duration: 4000,
             showCloseButton: false
           });
-        })
-        .catch(e =>
-          this.alertService.show({
-            alertMessage: e.error.message,
-            color: 'red',
-            position: 'top-0',
-            enterAnimation: 'top-slidedown',
-            leaveAnimation: 'top-slideup',
-            duration: 4000,
-            showCloseButton: false
-          }));
+        });
         this.loading = false;
       }
     },
@@ -186,17 +166,7 @@ export class JobDetailsPage implements OnInit, OnDestroy {
             duration: 4000,
             showCloseButton: false
           });
-        })
-        .catch(e =>
-          this.alertService.show({
-            alertMessage: e.error.message,
-            color: 'red',
-            position: 'top-0',
-            enterAnimation: 'top-slidedown',
-            leaveAnimation: 'top-slideup',
-            duration: 4000,
-            showCloseButton: false
-          }));
+        });
         this.loading = false;
       }
     }
@@ -321,7 +291,7 @@ export class JobDetailsPage implements OnInit, OnDestroy {
           </div>
         </ng-container>
         <ng-container *ngSwitchCase="'report-abuse'">
-          <div class="block">
+          <div class="block mb-8">
             <div class="flex-1 flex justify-start justify-center items-center items-stretch">
               <div class="absolute ml-2 mt-3 top-0 left-0 flex items-center sm:hidden">
                 <!-- Back button -->
@@ -373,18 +343,12 @@ export class JobDetailsMoreModal implements ModalContentComponent {
   ) {
   }
 
-  withdrawProposal() {
+  async withdrawProposal() {
     this.loading = true;
     const jobId: number = this.modalOptions.data.id;
-    this.freelancerActionsService.withdrawProposal(jobId)
-    .then((res: Response<null>) => {
-      this.events.publish('withdrawProposal', {message: res.message});
-      this.modalService.dismiss();
-    })
-    .catch(e => {
-      this.events.publish('withdrawProposal', {message: e.error.message});
-      this.modalService.dismiss();
-    });
+    await this.freelancerActionsService.withdrawProposal(jobId)
+    .then((res: Response<null>) => this.events.publish('withdrawProposal', {message: res.message}));
+    await this.modalService.dismiss();
   }
 
   reportAbuse() {
