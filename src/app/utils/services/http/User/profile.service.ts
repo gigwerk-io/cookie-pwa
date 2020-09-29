@@ -15,9 +15,8 @@ export class ProfileService extends RestService {
     super(httpClient);
   }
 
-  public searchUser(query: string): Promise<User[]> {
+  public searchUser(query: string): Promise<Response<User[]>> {
     return this.makeHttpRequest<Response<User[]>>(`search`, 'GET', {search: query})
-      .then(httpRes => httpRes.toPromise()
-        .then(res => res.data));
+      .then(httpRes => httpRes.toPromise());
   }
 }

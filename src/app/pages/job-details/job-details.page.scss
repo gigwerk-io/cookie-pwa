@@ -1,0 +1,59 @@
+@keyframes slideup {
+  from {
+    height: 33%;
+  }
+  to {
+    height: 17%;
+  }
+}
+
+@keyframes slidedown {
+  from {
+    height: 17%;
+  }
+  to {
+    height: 33%;
+  }
+}
+
+@keyframes rotate-clockwise-180 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+}
+
+@keyframes rotate-counterclockwise-180 {
+  from {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.slide-open {
+  animation-name: slidedown;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+.slide-close {
+  animation-name: slideup;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+.rotate-up {
+  animation-name: rotate-clockwise-180;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
+}
+
+.rotate-down {
+  animation-name: rotate-counterclockwise-180;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
+}

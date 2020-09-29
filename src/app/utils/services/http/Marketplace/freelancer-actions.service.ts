@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {RestService} from '../rest.service';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Job} from '../../../interfaces/responses/Marketplace';
 import {Response} from '../../../interfaces/responses/Response';
 import {AnnouncementService} from '../../internal/components/announcement/announcement.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FeedService extends RestService {
+export class FreelancerActionsService extends RestService {
 
   constructor(
     public httpClient: HttpClient,
@@ -17,8 +16,8 @@ export class FeedService extends RestService {
     super(httpClient);
   }
 
-  public jobFeed(): Promise<Response<Job[]>> {
-    return this.makeHttpRequest<Response<Job[]>>(`marketplace/feed`, 'GET')
+  public acceptJob(jobId: number): Promise<Response<null>> {
+    return this.makeHttpRequest<Response<null>>(`marketplace/job/${jobId}/accept`, 'POST')
     .then(httpRes => httpRes.toPromise())
     .catch((e: HttpErrorResponse) => {
       console.log(e.status);
@@ -30,8 +29,8 @@ export class FeedService extends RestService {
     });
   }
 
-  public myJobRequests(): Promise<Response<Job[]>> {
-    return this.makeHttpRequest<Response<Job[]>>(`marketplace/me`, 'GET')
+  public withdrawProposal(jobId: number): Promise<Response<null>> {
+    return this.makeHttpRequest<Response<null>>(`marketplace/job/${jobId}/withdraw`, 'POST')
     .then(httpRes => httpRes.toPromise())
     .catch((e: HttpErrorResponse) => {
       console.log(e.status);
@@ -43,8 +42,8 @@ export class FeedService extends RestService {
     });
   }
 
-  public myProposals(): Promise<Response<Job[]>> {
-    return this.makeHttpRequest<Response<Job[]>>(`marketplace/proposals`, 'GET')
+  public arriveToJob(jobId: number): Promise<Response<null>> {
+    return this.makeHttpRequest<Response<null>>(`marketplace/job/${jobId}/arrive`, 'POST')
     .then(httpRes => httpRes.toPromise())
     .catch((e: HttpErrorResponse) => {
       console.log(e.status);
@@ -56,8 +55,8 @@ export class FeedService extends RestService {
     });
   }
 
-  public showJob(id: number): Promise<Response<Job>> {
-    return this.makeHttpRequest<Response<Job>>(`marketplace/job/${id}`, 'GET')
+  public completeJob(jobId: number): Promise<Response<null>> {
+    return this.makeHttpRequest<Response<null>>(`marketplace/job/${jobId}/complete`, 'POST')
     .then(httpRes => httpRes.toPromise())
     .catch((e: HttpErrorResponse) => {
       console.log(e.status);

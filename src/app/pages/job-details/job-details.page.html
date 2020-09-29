@@ -18,56 +18,185 @@
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
           <!-- More button -->
-          <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+          <button (click)="openMoreModal()"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
             <img class="block w-10" src="assets/icon/interface/more.svg" alt="more button"/>
           </button>
         </div>
       </div>
     </gig-header>
-    <!--    <gig-toolbar>-->
-    <!--      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"-->
-    <!--              class="w-50 h-full text-center focus:outline-none">-->
-    <!--        Details-->
-    <!--      </button>-->
-    <!--      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"-->
-    <!--              class="w-50 h-full text-center focus:outline-none">-->
-    <!--        Checklist-->
-    <!--      </button>-->
-    <!--    </gig-toolbar>-->
+    <gig-toolbar>
+      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"
+              class="w-50 h-full text-center focus:outline-none">
+        Details
+      </button>
+      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"
+              class="w-50 h-full text-center focus:outline-none">
+        Checklist
+      </button>
+    </gig-toolbar>
   </div>
-  <!--  main content-->
-  <div class="mt-16 h-full w-full"
-       style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
-    <ng-container *ngIf="jobDetail; else skeletonJob">
-      <!-- job details here-->
-    </ng-container>
+  <!--  main content details-->
+  <ng-container [ngSwitch]="feed">
+    <ng-container *ngSwitchCase="'details'">
+      <div class="mt-32 h-full w-full"
+           style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+        <ng-container *ngIf="jobDetail; else skeletonJob">
+          <!-- job details here-->
+          <!-- Slide show-->
+          <div [ngClass]="toggleSlideShowOn ? 'slide-open' : (toggleSlideShowOff ? 'slide-close' : '')" class="w-full h-32 overflow-y-hidden bg-gray-800" style="height: 17%">
+            <gig-image imgSrc="{{jobDetail.image_one}}" imgAlt="job image one"></gig-image>
+          </div>
+          <!-- Main content panel -->
+          <div class="w-full h-auto bg-white" style="height: 83%;">
+            <!-- Expand/Collapse button -->
+            <div *ngIf="jobDetail.image_one" (click)="toggleSlideShow()" class="bg-white shadow-md sticky h-8 w-8 rounded-full mx-auto"
+                 style="margin-top: -1rem;margin-bottom: -1rem;">
+              <svg [ngClass]="toggleSlideShowOn ? 'rotate-up' : (toggleSlideShowOff ? 'rotate-down' : '')" class="h-5 w-5 mx-auto"
+                   style="position: absolute;margin-top: 50%;left: 50%;transform: translate(-50%, -50%);" fill="none"
+                   stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+            <!-- Content: What? -->
+            <div class="px-3 w-full border-b border-gray-400 h-16 flex justify-between">
+              <div class="my-auto inline-flex">
+                <gig-image [imgSrc]="jobDetail.customer.profile.image" imgClass="overflow-hidden rounded-full h-12 w-12"
+                           [imgAlt]="jobDetail.customer.first_name"></gig-image>
+                <p class="ml-2 text-sm my-auto font-semibold truncate">
+                  {{jobDetail.customer.first_name}} {{jobDetail.customer.last_name}}
+                </p>
+              </div>
+              <div class="my-auto inline-flex">
+                <div *ngIf="jobStatus.name !== 'Complete'; else completeIndicator"
+                     class="h-5 w-5 bg-{{jobStatus.color}}-500 rounded-full"></div>
+                <ng-template #completeIndicator>
+                  <svg class="w-5 h-5 text-white bg-green-400 rounded-full" fill="none" stroke="currentColor"
+                       viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </ng-template>
+                <p class="text-sm pl-2 font-semibold truncate">
+                  {{jobStatus.name}}
+                </p>
+              </div>
+            </div>
+            <div class="px-3 py-3 w-full border-b border-gray-400 h-auto">
+              <div class="mb-3 block flex justify-between">
+                <h1 class="font-semibold text-xl">
+                  {{jobDetail.category.name}}
+                </h1>
+                <div class="inline-flex" style="line-height: 1.87rem">
+                  <ion-icon class="mr--1 mt-2 text-xl font-medium" src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
+                  <div class="font-semibold text-4xl">{{displayPrice(jobDetail.price | currency: '':'':'1.2-2')}}</div>
+                </div>
+              </div>
+              <div class="block">
+                <div class="flex justify-between">
+                  <h4 class="font-semibold text-sm mb-2">Description</h4>
+                  <div class="inline-flex" *ngIf="jobDetail.views && jobStatus.name == 'Available'">
+                    <ion-icon src="assets/icon/interface/eye.svg" class="text-xl pr-2"></ion-icon>
+                    <p class="text-sm font-semibold">{{jobDetail.views | number: '1.0'}} Views</p>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-700">{{jobDetail.description}}</p>
+              </div>
+            </div>
 
-    <ng-template #skeletonJob>
-      <ion-skeleton-text animated class="w-full h-32"></ion-skeleton-text>
-      <ion-item>
-        <ion-avatar slot="start">
-          <ion-skeleton-text animated></ion-skeleton-text>
-        </ion-avatar>
-        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
-      </ion-item>
-      <ion-item>
-        <ion-avatar slot="start">
-          <ion-skeleton-text animated></ion-skeleton-text>
-        </ion-avatar>
-        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
-      </ion-item>
-      <ion-item>
-        <ion-avatar slot="start">
-          <ion-skeleton-text animated></ion-skeleton-text>
-        </ion-avatar>
-        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
-      </ion-item>
-      <ion-item>
-        <ion-avatar slot="start">
-          <ion-skeleton-text animated></ion-skeleton-text>
-        </ion-avatar>
-        <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
-      </ion-item>
-    </ng-template>
-  </div>
+            <!-- Content: When? -->
+            <div class="px-3 w-full border-b border-gray-400 h-16 flex justify-between">
+              <p class="my-auto text-sm font-semibold">
+                {{((jobDetail.status == 'Complete') ? jobDetail.proposals[0].completed_at : jobDetail.complete_before) | date: 'LLL. d, yyyy'}}
+              </p>
+              <p class="my-auto text-sm font-semibold">
+                {{((jobDetail.status == 'Complete') ? jobDetail.proposals[0].completed_at : jobDetail.complete_before) | date: 'EE h:mm aa'}}
+              </p>
+              <div class="my-auto text-sm font-semibold inline-flex">
+                <ion-icon src="assets/icon/interface/wall-clock.svg"
+                          class="text-xl pr-2 text-{{displayIntensity(jobDetail.intensity_id).color}}-600"></ion-icon>
+                <p class="text-sm font-semibold">
+                  {{displayIntensity(jobDetail.intensity_id).time}}
+                </p>
+              </div>
+            </div>
+
+            <!-- Content: Where? -->
+            <div class="px-3 py-3 w-full border-b border-gray-400 h-auto">
+              <div class="my-auto block flex justify-between">
+                <h1 class="font-semibold text-xl">Location</h1>
+                <div class="inline-flex">
+                  <ion-icon class="text-green-600 text-xl pr-1" src="assets/icon/interface/pin.svg"></ion-icon>
+                  <p class="text-sm font-bold text-green-600">{{jobDetail.distance_away}} mi</p>
+                </div>
+              </div>
+              <div *ngIf="jobDetail.location" class="flex mt-3 justify-between">
+                <div class="block">
+                  <p class="text-sm font-semibold text-gray-700">
+                    {{jobDetail.location.street_address}}
+                  </p>
+                  <p class="text-sm font-semibold text-gray-700">
+                    {{jobDetail.location.city}}, {{jobDetail.location.state}}
+                  </p>
+                  <p class="text-sm font-semibold text-gray-700">
+                    {{jobDetail.location.zip}}
+                  </p>
+                </div>
+                <div>
+                  <img src="assets/map-widget.png" alt="map widget"/>
+                </div>
+              </div>
+            </div>
+
+            <ng-container *ngIf="jobAction">
+          <span *ngIf="jobAction.button" class="px-3 absolute w-full" style="top: 90%">
+            <button [disabled]="loading" (click)="jobAction.callback()" type="button"
+                    class="justify-center w-full shadow-md inline-flex items-center px-4 py-3 border border-transparent text-xl leading-6 font-medium rounded-full text-white bg-{{jobAction.button.color}}-600 hover:bg-{{jobAction.button.color}}-500 focus:outline-none focus:border-{{jobAction.button.color}}-700 focus:shadow-outline-{{jobAction.button.color}} active:bg-{{jobAction.button.color}}-700 transition ease-in-out duration-150">
+              <ng-container *ngIf="!loading">
+                {{jobAction.button.text}}
+              </ng-container>
+              <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
+            </button>
+          </span>
+            </ng-container>
+
+            <div class="h-32 w-full"></div>
+          </div>
+        </ng-container>
+
+        <ng-template #skeletonJob>
+          <ion-skeleton-text animated class="w-full h-32"></ion-skeleton-text>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+          </ion-item>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
+          </ion-item>
+        </ng-template>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'checklist'">
+      <img src="assets/undraw/undraw_under_construction_46pa.svg" class="coming-soon" alt="Coming soon" />
+      <div class="w-full absolute text-center top-50">
+        <label class="text-gray-800">Coming soon...</label>
+      </div>
+    </ng-container>
+  </ng-container>
 </ion-content>

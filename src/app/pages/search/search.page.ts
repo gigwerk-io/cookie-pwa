@@ -4,6 +4,7 @@ import {Subject, Subscription} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {ProfileService} from '../../utils/services/http/User/profile.service';
 import {User} from '../../utils/interfaces/models/User';
+import {Response} from '../../utils/interfaces/responses/Response';
 
 @Component({
   selector: 'gig-search',
@@ -47,8 +48,8 @@ export class SearchPage implements OnInit, OnDestroy {
       distinctUntilChanged()
     ).subscribe((query: string) => (query) ?
       this.profileService.searchUser(query)
-        .then((res: User[]) =>
-          this.results = res
+        .then((res: Response<User[]>) =>
+          this.results = res.data
         ): undefined
     );
   }

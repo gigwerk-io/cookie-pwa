@@ -10,7 +10,7 @@ import {
   UrlSegment
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import {AuthService} from '../http/Auth/auth.service';
+import {LoginService} from '../http/Auth/login.service';
 import {Response} from '../../interfaces/responses/Response';
 import {ValidToken} from '../../interfaces/responses/Auth';
 import {NavController} from '@ionic/angular';
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   constructor(
     public navCtrl: NavController,
-    public authService: AuthService
+    public authService: LoginService
   ) {
   }
 

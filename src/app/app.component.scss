@@ -71,3 +71,17 @@
     font-size: 24px;
   }
 }
+
+::ng-deep .coming-soon {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  height: 25%;
+  left: 50%;
+  top: 50%;
+}
+
+::ng-deep .logo {
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -14,6 +14,7 @@ export class JobCardComponent implements OnInit {
   @Input() subCategory: string;
   @Input() price: number;
   @Input() completeByDate: any;
+  @Input() completeAtDate: any;
   @Input() views: number;
   @Input() distance: number;
   @Input() status: Status;
@@ -32,7 +33,7 @@ export class JobCardComponent implements OnInit {
     }
   }
 
-  displayPrice(price: string) {
+  displayPrice(price: string): string {
     const splitPrice: string[] = price.split('.');
     if (splitPrice[1] == '00') {
       return splitPrice[0];
@@ -41,7 +42,7 @@ export class JobCardComponent implements OnInit {
     }
   }
 
-  displayIntensity(intensityId: number) {
+  displayIntensity(intensityId: number): Intensity {
     return IntensityConst[intensityId];
   }
 

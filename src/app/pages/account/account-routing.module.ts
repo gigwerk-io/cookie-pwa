@@ -7,11 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: AccountPage
-  }
+  }, {
+    path: 'settings',
+    loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AccountPageRoutingModule {}
+export class AccountPageRoutingModule { }

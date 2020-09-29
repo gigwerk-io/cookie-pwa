@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../utils/services/http/Auth/auth.service';
+import {LoginService} from '../../utils/services/http/Auth/login.service';
 import {NavController} from '@ionic/angular';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -18,7 +18,7 @@ export class SignInWithGigwerkPage implements OnInit {
   });
 
   constructor(
-    public authService: AuthService,
+    public authService: LoginService,
     public navCtrl: NavController,
     public alertService: AlertService,
     private fb: FormBuilder
@@ -31,11 +31,10 @@ export class SignInWithGigwerkPage implements OnInit {
   signIn() {
     if (this.signInForm.valid) {
       this.authService.businessAppLogin(this.signInForm.value)
-      .then(() => {
-        this.navCtrl.navigateRoot('app/home');
-      })
-      .catch(e => {
-        console.log(e);
+      .then(() =>
+        this.navCtrl.navigateRoot('app/home')
+      )
+      .catch(e =>
         this.alertService.show({
           duration: 4000,
           alertMessage: e.error.message,
@@ -47,8 +46,8 @@ export class SignInWithGigwerkPage implements OnInit {
             title: 'Forgot Password',
             callback: () => console.log('Forgot password!')
           }
-        });
-      });
+        })
+      );
     }
   }
 }

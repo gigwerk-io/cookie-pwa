@@ -18,6 +18,7 @@ export class AlertComponent implements OnInit, OnDestroy {
   };
   @Input('color') color: string = 'indigo';
   @Input('alertMessage') alertMessage: string = '{Message here}';
+  @Input('showCloseButton') showCloseButton: boolean = true;
 
   constructor(
     public events: Events
@@ -33,6 +34,10 @@ export class AlertComponent implements OnInit, OnDestroy {
         this.actionButton = alertOptions.actionButton;
         this.color = alertOptions.color;
         this.alertMessage = alertOptions.alertMessage;
+
+        if (alertOptions.showCloseButton != undefined) {
+          this.showCloseButton = alertOptions.showCloseButton;
+        }
       });
     this.events.subscribe('global-alert-dismiss', (alertOptions: {animation: 'top-slideup' | 'top-slidedown' | 'bottom-slideup' | 'bottom-slidedown'}) => {
       if (alertOptions) {

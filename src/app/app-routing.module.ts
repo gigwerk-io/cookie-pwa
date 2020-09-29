@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from './utils/services/guard/auth.guard';
+import { AuthGuard } from './utils/services/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,9 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'sign-in-with-gigwerk',
-    loadChildren: () => import('./pages/sign-in-with-gigwerk/sign-in-with-gigwerk.module').then( m => m.SignInWithGigwerkPageModule),
+    loadChildren: () => import('./pages/sign-in-with-gigwerk/sign-in-with-gigwerk.module').then(m => m.SignInWithGigwerkPageModule),
     canActivate: [AuthGuard]
-  }
+  },
+
+
+
 ];
 
 @NgModule({
