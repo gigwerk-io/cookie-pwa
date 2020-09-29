@@ -9,6 +9,10 @@ const routes: Routes = [
     component: SearchPage
   },
   {
+    path: 'profile/:user_id',
+    loadChildren: () => import('../../pages/profile/profile.module').then(m => m.ProfilePageModule)
+  },
+  {
     path: 'account',
     loadChildren: () => import('../../pages/account/account.module').then( m => m.AccountPageModule)
   },

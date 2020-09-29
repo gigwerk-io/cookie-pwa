@@ -55,7 +55,7 @@
       <div class="bg-white shadow overflow-hidden sm:rounded-md">
         <ul>
           <li *ngFor="let res of results">
-            <div (click)="openProfile(res.id)" class="block hover:bg-gray-100 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+            <div [routerLink]="['/app/search/profile/', res.id]"class="block hover:bg-gray-100 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
               <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 flex items-center">
                   <div class="flex-shrink-0">
