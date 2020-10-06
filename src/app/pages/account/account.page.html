@@ -3,14 +3,14 @@
   <div class="z-102 fixed w-full">
     <gig-header>
       <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Back button -->
-          <button (click)="navCtrl.back()"
-                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                  aria-label="Main menu" aria-expanded="false">
-            <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button"/>
-          </button>
-        </div>
+<!--        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">-->
+<!--          &lt;!&ndash; Back button &ndash;&gt;-->
+<!--          <button (click)="navCtrl.back()"-->
+<!--                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"-->
+<!--                  aria-label="Main menu" aria-expanded="false">-->
+<!--            <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="back button"/>-->
+<!--          </button>-->
+<!--        </div>-->
         <div class="flex-shrink-0 flex items-center">
           <h5 class="block font-medium text-black">
             My Account
@@ -30,11 +30,48 @@
   <!-- main content -->
   <div class="mt-16 h-full w-full"
        style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
-    <ion-item (click)="signOut()" mode="ios" class="border-t border-b border-gray-400">
-      <ion-icon src="assets/icon/interface/log-out.svg" color="danger" slot="start"></ion-icon>
-      <ion-label class="font-bold">Sign out</ion-label>
-      <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>
-    </ion-item>
+    <ng-container *ngIf="user">
+      <div class="avatar-bg w-full h-56">
+        <div class="avatar overflow-hidden mx-auto h-32 w-32 rounded-full">
+          <img src="{{user.profile.image}}" class="h-full w-full" alt="profile photo" />
+        </div>
+        <div class="mt-8 text-center">
+          <h5 class="text-lg font-bold">
+            {{user.first_name}} {{user.last_name}}
+          </h5>
+          <p class="text-base text-green-500 font-bold">
+            @{{user.username}}
+          </p>
+        </div>
+      </div>
+<!--      <ion-item mode="ios" class="border-t border-b border-gray-400">-->
+<!--        <ion-icon src="assets/icon/interface/file.svg" slot="start"></ion-icon>-->
+<!--        <ion-label class="font-bold">My Information</ion-label>-->
+<!--        <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>-->
+<!--      </ion-item>-->
+<!--      <ion-item mode="ios" class="border-t border-b border-gray-400">-->
+<!--        <ion-icon src="assets/icon/interface/piggy-bank.svg" slot="start"></ion-icon>-->
+<!--        <ion-label class="font-bold">Payout</ion-label>-->
+<!--        <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>-->
+<!--      </ion-item>-->
+<!--      <ion-item mode="ios" class="border-t border-b border-gray-400">-->
+<!--        <ion-icon src="assets/icon/interface/umbrella.svg" slot="start"></ion-icon>-->
+<!--        <ion-label class="font-bold">Support Information</ion-label>-->
+<!--        <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>-->
+<!--      </ion-item>-->
+<!--      <ion-item mode="ios" class="border-t border-b border-gray-400">-->
+<!--        <img src="assets/icon/Logo-Black.png" class="h-5" slot="start" alt="Gigwerk logo" />-->
+<!--        <ion-label class="font-bold">My Gigwerk</ion-label>-->
+<!--        <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>-->
+<!--      </ion-item>-->
+      <ion-item (click)="signOut()" mode="ios" class="border-t border-b border-gray-400">
+        <ion-icon src="assets/icon/interface/log-out.svg" color="danger" slot="start"></ion-icon>
+        <ion-label class="font-bold">Sign out</ion-label>
+        <ion-icon src="assets/icon/interface/forward-chevron.svg" slot="end"></ion-icon>
+      </ion-item>
+    </ng-container>
+
+    <div class="h-16"></div>
   </div>
 
 </ion-content>

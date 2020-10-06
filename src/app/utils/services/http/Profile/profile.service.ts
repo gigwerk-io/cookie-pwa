@@ -14,9 +14,9 @@ export class ProfileService extends RestService {
     super(http);
   }
 
-  getProfile(user_id: string): Promise<Response<User[]>> {
+  getProfile(user_id: string): Promise<Response<User>> {
 
     return this.makeHttpRequest(`profile/${user_id}`, `GET`)
-    .then((res:  Observable<Response<User[]>>) => res.toPromise());
+    .then((res:  Observable<Response<User>>) => res.toPromise());
   }
 }
