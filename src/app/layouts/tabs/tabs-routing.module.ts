@@ -39,7 +39,11 @@ const routes: Routes = [
             loadChildren: () => import('../../pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
           }
         ]
-      }
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('../../pages/account/account.module').then( m => m.AccountPageModule)
+      },
     ]
   }
 ];

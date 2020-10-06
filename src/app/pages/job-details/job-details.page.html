@@ -25,34 +25,38 @@
         </div>
       </div>
     </gig-header>
-    <gig-toolbar>
-      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"
-              class="w-50 h-full text-center focus:outline-none">
-        Details
-      </button>
-      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"
-              class="w-50 h-full text-center focus:outline-none">
-        Checklist
-      </button>
-    </gig-toolbar>
+    <!--    <gig-toolbar>-->
+    <!--      <button (click)="feed = 'details'" [ngClass]="feed === 'details' ? 'active' : ''"-->
+    <!--              class="w-50 h-full text-center focus:outline-none">-->
+    <!--        Details-->
+    <!--      </button>-->
+    <!--      <button (click)="feed = 'checklist'" [ngClass]="feed === 'checklist' ? 'active' : ''"-->
+    <!--              class="w-50 h-full text-center focus:outline-none">-->
+    <!--        Checklist-->
+    <!--      </button>-->
+    <!--    </gig-toolbar>-->
   </div>
   <!--  main content details-->
-  <ng-container [ngSwitch]="feed">
-    <ng-container *ngSwitchCase="'details'">
-      <div class="mt-32 h-full w-full"
-           style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+  <div class="mt-16 h-full w-full"
+       style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+    <ng-container [ngSwitch]="feed">
+      <ng-container *ngSwitchCase="'details'">
+
         <ng-container *ngIf="jobDetail; else skeletonJob">
           <!-- job details here-->
           <!-- Slide show-->
-          <div [ngClass]="toggleSlideShowOn ? 'slide-open' : (toggleSlideShowOff ? 'slide-close' : '')" class="w-full h-32 overflow-y-hidden bg-gray-800" style="height: 17%">
+          <div [ngClass]="toggleSlideShowOn ? 'slide-open' : (toggleSlideShowOff ? 'slide-close' : '')"
+               class="w-full h-32 overflow-y-hidden bg-gray-800" style="height: 17%">
             <gig-image imgSrc="{{jobDetail.image_one}}" imgAlt="job image one"></gig-image>
           </div>
           <!-- Main content panel -->
           <div class="w-full h-auto bg-white" style="height: 83%;">
             <!-- Expand/Collapse button -->
-            <div *ngIf="jobDetail.image_one" (click)="toggleSlideShow()" class="bg-white shadow-md sticky h-8 w-8 rounded-full mx-auto"
+            <div *ngIf="jobDetail.image_one" (click)="toggleSlideShow()"
+                 class="bg-white shadow-md sticky h-8 w-8 rounded-full mx-auto"
                  style="margin-top: -1rem;margin-bottom: -1rem;">
-              <svg [ngClass]="toggleSlideShowOn ? 'rotate-up' : (toggleSlideShowOff ? 'rotate-down' : '')" class="h-5 w-5 mx-auto"
+              <svg [ngClass]="toggleSlideShowOn ? 'rotate-up' : (toggleSlideShowOff ? 'rotate-down' : '')"
+                   class="h-5 w-5 mx-auto"
                    style="position: absolute;margin-top: 50%;left: 50%;transform: translate(-50%, -50%);" fill="none"
                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -87,7 +91,8 @@
                   {{jobDetail.category.name}}
                 </h1>
                 <div class="inline-flex" style="line-height: 1.87rem">
-                  <ion-icon class="mr--1 mt-2 text-xl font-medium" src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
+                  <ion-icon class="mr--1 mt-2 text-xl font-medium"
+                            src="assets/icon/interface/dollar-symbol.svg"></ion-icon>
                   <div class="font-semibold text-4xl">{{displayPrice(jobDetail.price | currency: '':'':'1.2-2')}}</div>
                 </div>
               </div>
@@ -148,15 +153,15 @@
             </div>
 
             <ng-container *ngIf="jobAction">
-          <span *ngIf="jobAction.button" class="px-3 absolute w-full" style="top: 90%">
-            <button [disabled]="loading" (click)="jobAction.callback()" type="button"
-                    class="justify-center w-full shadow-md inline-flex items-center px-4 py-3 border border-transparent text-xl leading-6 font-medium rounded-full text-white bg-{{jobAction.button.color}}-600 hover:bg-{{jobAction.button.color}}-500 focus:outline-none focus:border-{{jobAction.button.color}}-700 focus:shadow-outline-{{jobAction.button.color}} active:bg-{{jobAction.button.color}}-700 transition ease-in-out duration-150">
-              <ng-container *ngIf="!loading">
-                {{jobAction.button.text}}
-              </ng-container>
-              <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
-            </button>
-          </span>
+            <span *ngIf="jobAction.button" class="px-3 absolute w-full" style="top: 90%">
+              <button [disabled]="loading" (click)="jobAction.callback()" type="button"
+                      class="justify-center w-full shadow-md inline-flex items-center px-4 py-3 border border-transparent text-xl leading-6 font-medium rounded-full text-white bg-{{jobAction.button.color}}-600 hover:bg-{{jobAction.button.color}}-500 focus:outline-none focus:border-{{jobAction.button.color}}-700 focus:shadow-outline-{{jobAction.button.color}} active:bg-{{jobAction.button.color}}-700 transition ease-in-out duration-150">
+                <ng-container *ngIf="!loading">
+                  {{jobAction.button.text}}
+                </ng-container>
+                <ion-spinner name="dots" [ngClass]="!loading ? 'hidden' : ''" class="text-white"></ion-spinner>
+              </button>
+            </span>
             </ng-container>
 
             <div class="h-32 w-full"></div>
@@ -190,13 +195,13 @@
             <ion-skeleton-text animated class="h-8 w-full mr-3 rounded-lg"></ion-skeleton-text>
           </ion-item>
         </ng-template>
-      </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'checklist'">
+        <img src="assets/undraw/undraw_under_construction_46pa.svg" class="coming-soon" alt="Coming soon"/>
+        <div class="w-full absolute text-center top-50">
+          <label class="text-gray-800">Coming soon...</label>
+        </div>
+      </ng-container>
     </ng-container>
-    <ng-container *ngSwitchCase="'checklist'">
-      <img src="assets/undraw/undraw_under_construction_46pa.svg" class="coming-soon" alt="Coming soon" />
-      <div class="w-full absolute text-center top-50">
-        <label class="text-gray-800">Coming soon...</label>
-      </div>
-    </ng-container>
-  </ng-container>
+  </div>
 </ion-content>

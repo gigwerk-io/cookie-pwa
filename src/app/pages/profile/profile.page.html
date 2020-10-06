@@ -1,33 +1,52 @@
-<gig-header>
-  <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-      <!-- Search filter button -->
-      <button (click)="back()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-          <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="filter button" />
-      </button>
-      </div>
-      <div class="flex-shrink-0 flex items-center">
-      <h5 class="block text-black font-medium">
-          {{ first_name }} {{ last_name }}
-      </h5>
-      </div>
-      <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
-      <!-- User account button -->
-      <button (click)="router.navigateByUrl('/app/search/account')" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-          <img class="block h-8 w-8" src="assets/icon/interface/more.svg" alt="user account button" />
-      </button>
-      </div>
-  </div>
-</gig-header>
+
 <ion-content>
-  <div class="flex justify-center">
-      <img class="h-32 w-32 rounded-full xl:w-56 xl:h-56 mt-8 shadow-2xl shadow-green-200" src="{{ picture }}" alt="">
+  <!-- header -->
+  <div class="z-102 fixed w-full">
+    <gig-header>
+      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Search filter button -->
+          <button (click)="back()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+            <img class="block h-6 w-6" src="assets/icon/interface/back.svg" alt="filter button" />
+          </button>
+        </div>
+        <div class="flex-shrink-0 flex items-center">
+          <h5 *ngIf="user" class="block text-black font-medium">
+            {{ user.first_name }} {{ user.last_name }}
+          </h5>
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+        </div>
+      </div>
+    </gig-header>
   </div>
-  <div class="flex justify-center mt-2 text-lg">
-      {{ first_name }} {{ last_name }}
-  </div>
-  <div class="flex justify-center text-green-400">
-      @{{ username }}
+
+  <!-- main content -->
+  <div class="mt-16 h-full w-full"
+       style="touch-action: pan-y;overflow-y: auto;overscroll-behavior-y: contain;will-change: scroll-position">
+    <ng-container *ngIf="user; else skeletonProfile">
+      <div class="flex justify-center">
+        <img class="h-32 w-32 rounded-full xl:w-56 xl:h-56 mt-8 shadow-2xl shadow-green-200" src="{{ user.profile.image }}" alt="">
+      </div>
+      <div class="flex justify-center mt-2 text-lg">
+        {{ user.first_name }} {{ user.last_name }}
+      </div>
+      <div class="flex justify-center text-green-400">
+        @{{ user.username }}
+      </div>
+    </ng-container>
+
+    <ng-template #skeletonProfile>
+      <div class="flex justify-center">
+        <ion-skeleton-text class="h-32 w-32 rounded-full mt-8" animated></ion-skeleton-text>
+      </div>
+      <div class="flex justify-center mt-2 text-lg">
+        <ion-skeleton-text class="rounded h-5 w-16 mr-2" animated></ion-skeleton-text>
+        <ion-skeleton-text class="rounded h-5 w-16" animated></ion-skeleton-text>
+      </div>
+      <div class="flex justify-center text-green-400">
+        <ion-skeleton-text class="rounded h-5 w-16" animated></ion-skeleton-text>
+      </div>
+    </ng-template>
   </div>
 </ion-content>
-            

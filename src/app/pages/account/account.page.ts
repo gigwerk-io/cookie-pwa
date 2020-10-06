@@ -4,6 +4,9 @@ import {LoginService} from '../../utils/services/http/Auth/login.service';
 import {AlertService} from '../../utils/services/internal/components/alert/alert.service';
 import {Response} from '../../utils/interfaces/responses/Response';
 import {Router} from '@angular/router';
+import {User} from '../../utils/interfaces/models/User';
+import {get} from '../../utils/services/internal/storage';
+import {StorageKeys} from '../../utils/interfaces/enum/Constants';
 
 @Component({
   selector: 'gig-account',
@@ -13,6 +16,7 @@ import {Router} from '@angular/router';
 export class AccountPage implements OnInit {
 
   baseRoute: string;
+  user: User;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +28,8 @@ export class AccountPage implements OnInit {
 
   ngOnInit() {
     this.baseRoute = this.router.url.split('/').join('/');
-    console.log(this.baseRoute);
+    get(StorageKeys.User)
+      .then((user: User) => this.user = user);
   }
 
   signOut() {

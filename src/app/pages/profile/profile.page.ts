@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import {Location} from '@angular/common';
 import { ProfileService } from 'src/app/utils/services/http/Profile/profile.service';
+import {User} from '../../utils/interfaces/models/User';
 
 
 @Component({
@@ -12,11 +13,7 @@ import { ProfileService } from 'src/app/utils/services/http/Profile/profile.serv
 })
 export class ProfilePage implements OnInit {
 
-  email: string;
-  picture: string;
-  last_name: string;
-  first_name: string;
-  username: string;
+  user: User;
 
   constructor(
     public router: Router,
@@ -29,11 +26,7 @@ export class ProfilePage implements OnInit {
 
     return this.profileService.getProfile(this.route.snapshot.paramMap.get("user_id")).then(res => {
       console.log(res.data);
-      this.email = res.data['email'];
-      this.picture = res.data['profile']['image'];
-      this.first_name = res.data['first_name'];
-      this.last_name = res.data['last_name'];
-      this.username = res.data['username'];
+      this.user = res.data;
     });
   }
 
